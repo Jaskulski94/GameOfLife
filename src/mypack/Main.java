@@ -1,11 +1,13 @@
 package mypack;
 
+import java.awt.GraphicsEnvironment;
+
 /**
  * @author Jakub Jaskulski
  * @version 1.0
  * @since 29.10.18
  *
- *        Class containing distribution scheme.
+ *        Program initiating.
  *
  */
 

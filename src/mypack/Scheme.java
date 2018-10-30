@@ -1,38 +1,101 @@
 package mypack;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import javax.swing.JFrame;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 /**
  * @author Jakub Jaskulski
  * @version 1.0
  * @since 29.10.18
  *
- *        Class containing distribution scheme.
+ *        Contains frame's scheme. Creates customFont.
  *
  */
 
 public class Scheme extends JFrame {
+
+    private Title titlePanel;
+    private Buttons buttonsPanel;
+    private Game gamePanel;
+
+    private Font customFont;
+    private int frameWidth;
+    private int frameHeight;
+
+    public Font getCustomFont() {
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/visitor1.ttf")).deriveFont(44f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("font/visitor1.ttf")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(FontFormatException e) {
+            e.printStackTrace();
+        }
+        return customFont;
+    }
+
+    public int getFrameWidth() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frameWidth = dim.width/2;
+        return frameWidth;
+    }
+
+    public int getFrameHeight() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frameHeight = dim.height*2/3;
+        return frameHeight;
+    }
 
     public Scheme() {
         init();
     }
 
     public void init() {
-        setSize(1000, 1000);
+
+        titlePanel = new Title(this);
+        buttonsPanel = new Buttons(this, gamePanel);
+        gamePanel = new Game(this);
+
+        customFont = this.getCustomFont();
+
         setLayout(new GridLayout(3, 1));
 
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(frameWidth, frameHeight);
+        GridBagLayout layout1 = new GridBagLayout();
+        this.setLayout(layout1);
 
-        System.out.println(dim.width);
-        System.out.println(dim.height);
+        GridBagConstraints GBC = new GridBagConstraints();
 
-        this.setSize(dim.width/2, dim.height/2);
+        GBC.gridx = 0;
+        GBC.gridy = 0;
+        GBC.weightx = 1;
+        GBC.weighty = 1;
+        GBC.fill = GridBagConstraints.BOTH;
+        this.add(titlePanel, GBC);
 
-      //  this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height
-      //          / 2 - this.getSize().height / 2);
+        GBC.gridx = 0;
+        GBC.gridy = 1;
+        this.add(gamePanel, GBC);
+
+        GBC.gridx = 0;
+        GBC.gridy = 2;
+        this.add(buttonsPanel, GBC);
+
+        Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+        titlePanel.setBorder(raisedetched);
+        gamePanel.setBorder(raisedetched);
+        buttonsPanel.setBorder(raisedetched);
+
+        titlePanel.setVisible(true);
+        gamePanel.setVisible(true);
+        buttonsPanel.setVisible(true);
+
+        this.setVisible(true);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
