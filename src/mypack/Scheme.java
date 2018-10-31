@@ -104,6 +104,8 @@ public class Scheme extends JFrame {
 
         this.setVisible(true);
 
+        gamePanel.runGame();
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 

@@ -16,10 +16,39 @@ public class Game extends JPanel {
 
     private Scheme newScheme;
 
+    JButton[][] squareButton1;
+    boolean[][] squareBool1;
+
     boolean startBool = false;
     boolean slowBool = false;
     boolean nearBool = false;
     boolean clearBool = false;
+
+    int size;
+
+    public void changeBool(boolean bool1){
+        bool1 ^= true;
+    }
+
+    /*public void changeStartBool(){
+        startBool ^= true;
+    }*/
+
+    public void setStartBool(boolean bool1){
+        startBool = bool1;
+    }
+
+    public void setSlowBool(boolean bool1){
+        slowBool = bool1;
+    }
+
+    public void setNearBool(boolean bool1){
+        nearBool = bool1;
+    }
+
+    public void setClearBool(boolean bool1){
+        clearBool = bool1;
+    }
 
  //   int panelWidth;
  //   int panelHeight;
@@ -45,19 +74,25 @@ public class Game extends JPanel {
         }
     }*/
 
-    public void addGameSquare(JButton but, GridBagConstraints GBC){
-        but = new JButton();
-        but.setBorderPainted(true);
-        but.setFocusPainted(false);
-        but.setBackground(Color.BLACK);
-        but.setContentAreaFilled(true);
-        this.add(but, GBC);
+    public void addGameSquare(JButton but1, boolean bool1, GridBagConstraints GBC){
+        but1 = new JButton();
+        but1.setBorderPainted(true);
+        but1.setFocusPainted(false);
+        but1.setBackground(Color.BLACK);
+        but1.setContentAreaFilled(true);
+        SquareListener squareLis = new SquareListener(bool1, but1);
+        but1.addActionListener(squareLis);
+        this.add(but1, GBC);
     }
 
-    public void initialize(JButton[][] nearGameSquares){
+    public void initialize(int size){
+        int gameSize = size;
 
-        int widthSize = nearGameSquares[0].length;
-        int HeightSize = nearGameSquares[1].length;
+        JButton[][] squareButton1 = new JButton[gameSize][gameSize];
+        boolean[][] squareBool1 = new boolean[gameSize+2][gameSize+2];
+
+        int widthSize = squareButton1[0].length;
+        int HeightSize = squareButton1[1].length;
         GridBagConstraints GBC = new GridBagConstraints();
         GBC.weightx = 1;
         GBC.weighty = 1;
@@ -67,8 +102,106 @@ public class Game extends JPanel {
             for(int j=0; j<HeightSize; j++){
                GBC.gridx = i;
                GBC.gridy = j;
-               addGameSquare(nearGameSquares[i][j], GBC);
+               addGameSquare(squareButton1[i][j], squareBool1[i+1][j+1], GBC);
             }
+        }
+        System.out.println("Game has been initialized");
+    }
+
+    public void tempoFast(){
+        System.out.println("funkcja tempoFast");
+
+        try
+        {
+            Thread.sleep(200);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public void tempoSlow(){
+   //     System.out.println("funkcja tempoSlow");
+
+        try
+        {
+            Thread.sleep(1200);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public void nearFarGame(){
+        System.out.println("funkcja nearFarGame "+String.valueOf(nearBool));
+    }
+
+    public void clearGame(){
+        initialize(size);
+        System.out.println("funkcja clearGame "+String.valueOf(clearBool));
+        clearBool = false;
+    //    startBool = false;
+    }
+
+    public void nextStep() {
+        System.out.println("funkcja nextStep " + String.valueOf(startBool));
+        int aliveCells = 0;
+        for (int i = 1; i < size; i++) {
+            for (int j = 1; j < size; j++) {
+                for (int x = -1; x <= 2; x++) {
+                    for (int y = -1; y <= 2; y++) {
+                        if (!((x == 0) && (y == 0))) {
+                            if (squareBool1[i + x][j + y]) {
+                                aliveCells++;
+                            }
+                        }
+                    }
+                }
+                System.out.println(aliveCells);
+                aliveCells = 0;
+            }
+        }
+    }
+
+    public void playGame(){
+        if (slowBool == true){
+            tempoFast();
+    //        System.out.println("tempoFastBool weszlo");
+        } else {
+            tempoSlow();
+   //         System.out.println("tempoSlowBool weszlo");
+        }
+
+        if (nearBool == true){
+            nearFarGame();
+    //        System.out.println("nearBool weszlo");
+        }
+
+        if (clearBool == true){
+            System.out.println("funkcja clear "+String.valueOf(clearBool));
+         //   startBool = false;
+            clearGame();
+            clearBool = false;
+         //   startBool = false;
+   //         System.out.println("clearBool cos robi");
+        }
+
+        if (startBool == true){
+            nextStep();
+  //          System.out.println("nextStepBool cos robi");
+        }
+    //    System.out.println(String.valueOf(startBool)+" startbool");
+
+    }
+
+    public void runGame(){
+
+        System.out.println("runGame cos robi");
+        boolean gameRunBool = true;
+        while(gameRunBool){
+            playGame();
         }
     }
 
@@ -116,11 +249,10 @@ public class Game extends JPanel {
 
         this.setBackground(Color.WHITE);
 
-        JButton[][] nearGameSquares = new JButton[20][20];
-        initialize(nearGameSquares);
+        GameEngine myGame = new GameEngine();
 
-        /*ButtonModel[][] gameSquares = new ButtonModel[20][20];
-        initialize(gameSquares);*/
+        size = 20;
+        initialize(size);
 
     }
 }

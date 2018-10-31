@@ -18,10 +18,10 @@ public class Buttons extends JPanel {
 
     private Scheme newScheme;
 
-    private boolean startBool;
+    /*private boolean startBool;
     private boolean slowBool;
     private boolean nearBool;
-    private boolean clearBool;
+    private boolean clearBool;*/
 
     JButton startButton;
     JButton slowButton;
@@ -72,15 +72,15 @@ public class Buttons extends JPanel {
         nearButton = new JButton();
         clearButton = new JButton();
 
-        addButton(startButton, "START", customFont, panelHeight, startListener, startBool);
-        addButton(slowButton, "SLOW", customFont, panelHeight, slowListener, slowBool);
-        addButton(nearButton, "NEAR", customFont, panelHeight, nearListener, nearBool);
-        addButton(clearButton, "CLEAR", customFont, panelHeight, clearListener, clearBool);
+        addButton(startButton, "START", customFont, panelHeight, startListener, gamePanel.startBool);
+        addButton(slowButton, "SLOW", customFont, panelHeight, slowListener, gamePanel.slowBool);
+        addButton(nearButton, "NEAR", customFont, panelHeight, nearListener, gamePanel.nearBool);
+        addButton(clearButton, "CLEAR", customFont, panelHeight, clearListener, gamePanel.clearBool);
 
-        ButtonListener startListener = new ButtonListener(gamePanel, startBool, startButton);
-        ButtonListener slowListener = new ButtonListener(gamePanel, slowBool, slowButton);
-        ButtonListener nearListener = new ButtonListener(gamePanel, nearBool, nearButton);
-        ButtonListener clearListener = new ButtonListener(gamePanel, clearBool, clearButton);
+        ButtonListener startListener = new ButtonListener(gamePanel, gamePanel.startBool, startButton);
+        ButtonListener slowListener = new ButtonListener(gamePanel, gamePanel.slowBool, slowButton);
+        ButtonListener nearListener = new ButtonListener(gamePanel, gamePanel.nearBool, nearButton);
+        ButtonListener clearListener = new ButtonListener(gamePanel, gamePanel.clearBool, clearButton);
 
         startButton.addActionListener(startListener);
         slowButton.addActionListener(slowListener);

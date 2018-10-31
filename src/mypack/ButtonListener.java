@@ -18,22 +18,43 @@ public class ButtonListener implements ActionListener {
 
     public void actionPerformed(ActionEvent arg0) {
 
-        bool1 ^= true;
+        /*gamePanel.changeBool(bool1);
 
+        bool1 ^= true;
+*/
         String currentText = but.getText();
 
-        if (currentText.equals("START"))
+        if (currentText.equals("START")) {
             but.setText("STOP");
-        else if (currentText.equals("STOP"))
+            gamePanel.setStartBool(true);
+        } else if (currentText.equals("STOP")) {
             but.setText("START");
-        else if (currentText.equals("SLOW"))
+            gamePanel.setStartBool(false);
+        }
+
+        if (currentText.equals("SLOW")) {
             but.setText("FAST");
-        else if (currentText.equals("FAST"))
+            gamePanel.setSlowBool(true);
+        } else if (currentText.equals("FAST")) {
             but.setText("SLOW");
-        else if (currentText.equals("NEAR"))
+            gamePanel.setSlowBool(false);
+        }
+
+        if (currentText.equals("NEAR")) {
             but.setText("FAR");
-        else if (currentText.equals("FAR"))
+            gamePanel.setNearBool(true);
+        } else if (currentText.equals("FAR")) {
             but.setText("NEAR");
+            gamePanel.setNearBool(false);
+        }
+
+        if (currentText.equals("CLEAR")) {
+            gamePanel.setClearBool(true);
+        }
+
+    //    System.out.println(but.getText());
+    //    System.out.println(String.valueOf(bool1));
+
     }
 
 }
