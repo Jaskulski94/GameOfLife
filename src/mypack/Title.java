@@ -16,6 +16,13 @@ public class Title extends JPanel {
 
     private Scheme newScheme;
 
+    public void printWord(String word, Font customFont){
+        JLabel titleLabel = new JLabel(word, JLabel.CENTER);
+        titleLabel.setFont(customFont);
+        titleLabel.setForeground(Color.WHITE);
+        this.add(titleLabel);
+    }
+
     public Title(Scheme scheme1) {
         this.newScheme = scheme1;
         init();
@@ -26,16 +33,18 @@ public class Title extends JPanel {
         Font customFontBig = newScheme.getCustomFont();
         customFontBig = customFontBig.deriveFont(94f);
 
+
         int panelWidth = newScheme.getFrameWidth();
         int panelHeight = newScheme.getFrameHeight();
-        panelHeight /= 10;
+        panelHeight /= 12;
+        Dimension dim = new Dimension(panelWidth, panelHeight);
 
-        this.setSize(panelWidth, panelHeight);
+        this.setMinimumSize(dim);
 
-        JLabel titleLabel = new JLabel("GAME OF LIFE", JLabel.CENTER);
-        titleLabel.setFont(customFontBig);
-        this.add(titleLabel);
-        titleLabel.setForeground(Color.WHITE);
+        printWord("GAME ", customFontBig);
+        printWord("OF ", customFontBig);
+        printWord("LIFE ", customFontBig);
+
         this.setBackground(Color.BLACK);
     }
 }

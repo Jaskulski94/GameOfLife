@@ -21,41 +21,88 @@ public class Game extends JPanel {
     boolean nearBool = false;
     boolean clearBool = false;
 
-    /*public boolean getStartBool(){
-        return startBool;
+ //   int panelWidth;
+ //   int panelHeight;
+
+   /* public class ButtonModel {
+        JButton but;
+        boolean butBool = false;
+
+        public boolean getBool(){
+            return butBool;
+        }
+
+        public void setBool(boolean bool1){
+            this.butBool = bool1;
+        }
+
+        public void changeBool(){
+            this.butBool ^= true;
+        }
+
+        public JButton getButton (){
+            return but;
+        }
+    }*/
+
+    public void addGameSquare(JButton but, GridBagConstraints GBC){
+        but = new JButton();
+        but.setBorderPainted(true);
+        but.setFocusPainted(false);
+        but.setBackground(Color.BLACK);
+        but.setContentAreaFilled(true);
+        this.add(but, GBC);
     }
 
-    public boolean getSlowBool(){
-        return slowBool;
+    public void initialize(JButton[][] nearGameSquares){
+
+        int widthSize = nearGameSquares[0].length;
+        int HeightSize = nearGameSquares[1].length;
+        GridBagConstraints GBC = new GridBagConstraints();
+        GBC.weightx = 1;
+        GBC.weighty = 1;
+        GBC.fill = GridBagConstraints.BOTH;
+
+        for (int i=0; i<widthSize; i++){
+            for(int j=0; j<HeightSize; j++){
+               GBC.gridx = i;
+               GBC.gridy = j;
+               addGameSquare(nearGameSquares[i][j], GBC);
+            }
+        }
     }
 
-    public boolean getNearBool(){
-        return nearBool;
-    }
+    /*public void initialize(ButtonModel[][] squaresModel1){
 
-    public boolean getClearBool(){
-        return clearBool;
-    }
-*/
-    public void changeBool (boolean Bool) {
-        Bool ^= true;
-    }
+        int widthSize = squaresModel1[0].length;
+        int heightSize = squaresModel1[1].length;
+        GridBagConstraints GBC = new GridBagConstraints();
+        GBC.weightx = 1;
+        GBC.weighty = 1;
+        GBC.fill = GridBagConstraints.BOTH;
 
-    public void changeStartBool () {
-        startBool ^= true;
-    }
+        for (int i=0; i<widthSize; i++){
+            for(int j=0; j<heightSize; j++){
+                GBC.gridx = i;
+                GBC.gridy = j;
 
-    public void changeSlowBool () {
-        slowBool ^= true;
-    }
+                squaresModel1[i][j].setBool(true);
 
-    public void changeNearBool () {
-        nearBool ^= true;
-    }
+                squaresModel1[i][j].changeBool();
 
-    public void changeClearBool () {
-        clearBool ^= true;
-    }
+                boolean testBool;
+                testBool = squaresModel1[i][j].getBool();
+                String testString;
+                testString = String.valueOf(testBool);
+                System.out.println(testString);
+           //     JButton buttoner = new JButton();
+           //     buttoner = squaresModel1[i][j].getButton();
+           //     addGameSquare(buttoner, GBC);
+
+              //  addGameSquare(gameSquares1[i][j].but, GBC);
+            }
+        }
+    }*/
 
     public Game(Scheme scheme1) {
         this.newScheme = scheme1;
@@ -64,14 +111,16 @@ public class Game extends JPanel {
 
     public void init() {
 
-    //    this.setLayout(new FlowLayout());
+        GridBagLayout layout1 = new GridBagLayout();
+        this.setLayout(layout1);
+
         this.setBackground(Color.WHITE);
 
-        int panelWidth = newScheme.getFrameWidth();
-        int panelHeight = newScheme.getFrameHeight();
-        panelHeight *= 0.7;
+        JButton[][] nearGameSquares = new JButton[20][20];
+        initialize(nearGameSquares);
 
-        this.setSize(panelWidth, panelHeight);
+        /*ButtonModel[][] gameSquares = new ButtonModel[20][20];
+        initialize(gameSquares);*/
 
     }
 }

@@ -58,14 +58,21 @@ public class Scheme extends JFrame {
     public void init() {
 
         titlePanel = new Title(this);
-        buttonsPanel = new Buttons(this, gamePanel);
+        titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight/12));
+
         gamePanel = new Game(this);
+        gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight*7/12));
 
-        customFont = this.getCustomFont();
 
-        setLayout(new GridLayout(3, 1));
+        buttonsPanel = new Buttons(this, gamePanel);
+        buttonsPanel.setPreferredSize(new Dimension(frameWidth, frameHeight*2/12));
 
-        this.setSize(frameWidth, frameHeight);
+        customFont = getCustomFont();
+
+        Dimension frameDim = new Dimension(frameWidth, frameHeight);
+        this.setSize(frameDim);
+    //    this.setMinimumSize(frameDim);
+
         GridBagLayout layout1 = new GridBagLayout();
         this.setLayout(layout1);
 
