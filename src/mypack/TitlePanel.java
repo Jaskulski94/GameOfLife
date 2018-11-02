@@ -12,7 +12,7 @@ import java.awt.*;
  *
  */
 
-public class Title extends JPanel {
+public class TitlePanel extends JPanel {
 
     private Scheme newScheme;
 
@@ -23,7 +23,7 @@ public class Title extends JPanel {
         this.add(titleLabel);
     }
 
-    public Title(Scheme scheme1) {
+    public TitlePanel(Scheme scheme1) {
         this.newScheme = scheme1;
         init();
     }

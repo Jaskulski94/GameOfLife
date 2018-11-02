@@ -12,41 +12,27 @@ import java.awt.*;
  *
  */
 
-public class Game extends JPanel {
+public class GamePanel extends JPanel {
 
     private Scheme newScheme;
 
     public JButton[][] squareButton1;
     public boolean[][] squareBool1;
 
-    boolean startBool = false;
+   /* boolean startBool = false;
     boolean slowBool = false;
     boolean nearBool = false;
-    boolean clearBool = false;
+    boolean clearBool = false;*/
+
+    ControlButtons controlButtons;
+    GameEngine gameEngine;
+
+   // boolean[] controlBools;
 
     boolean gameRunBool;
 
     int size;
 
-    public void changeBool(boolean bool1){
-        bool1 ^= true;
-    }
-
-    public void setStartBool(boolean bool1){
-        startBool = bool1;
-    }
-
-    public void setSlowBool(boolean bool1){
-        slowBool = bool1;
-    }
-
-    public void setNearBool(boolean bool1){
-        nearBool = bool1;
-    }
-
-    public void setClearBool(boolean bool1){
-        clearBool = bool1;
-    }
 
     public void addGameSquare(JButton but1, boolean bool1, GridBagConstraints GBC){
         but1 = new JButton();
@@ -61,9 +47,6 @@ public class Game extends JPanel {
 
     public void initialize(int size){
         int gameSize = size;
-
-        /*JButton[][] squareButton1 = new JButton[gameSize][gameSize];
-        boolean[][] squareBool1 = new boolean[gameSize+2][gameSize+2];*/
 
         squareButton1 = new JButton[gameSize][gameSize];
         squareBool1 = new boolean[gameSize+2][gameSize+2];
@@ -112,7 +95,7 @@ public class Game extends JPanel {
     }
 
     public void nearFarGame(){
-        System.out.println("funkcja nearFarGame "+String.valueOf(nearBool));
+        System.out.println("funkcja nearFarGame "+String.valueOf(controlButtons.buttonBool[2]));
     }
 
     public void clearGame(){
@@ -126,15 +109,15 @@ public class Game extends JPanel {
         initialize(size);
         System.out.println("Zainicjalizowano nowe buttony");
 
-        System.out.println("wartosc clearGame "+String.valueOf(clearBool));
-        clearBool = false;
-        System.out.println("clearBool zmieniony na: "+String.valueOf(clearBool)+"\n");
+        System.out.println("wartosc clearGame "+String.valueOf(controlButtons.buttonBool[3]));
+        //clearBool = false;
+        controlButtons.buttonBool[3] = false;
+        System.out.println("clearBool zmieniony na: "+String.valueOf(controlButtons.buttonBool[3])+"\n");
 
-        //    startBool = false;
     }
 
     public void nextStep() {
-        System.out.println("funkcja nextStep " + String.valueOf(startBool));
+        System.out.println("funkcja nextStep " + String.valueOf(controlButtons.buttonBool[0]));
 
         int aliveCells = 0;
         for (int i = 1; i < size; i++) {
@@ -158,13 +141,13 @@ public class Game extends JPanel {
     }
 
     public void playGame(){
-        if (clearBool == true){
-            System.out.println("funkcja clear "+String.valueOf(clearBool));
+        if (controlButtons.buttonBool[3] == true){
+            System.out.println("funkcja clear "+String.valueOf(controlButtons.buttonBool[3]));
             clearGame();
-            clearBool = false;
+            controlButtons.setBool(3,false);
         }
 
-        if (slowBool == true){
+        if (controlButtons.buttonBool[1] == true){
             tempoFast();
     //        System.out.println("tempoFastBool weszlo");
         } else {
@@ -172,12 +155,12 @@ public class Game extends JPanel {
    //         System.out.println("tempoSlowBool weszlo");
         }
 
-        if (nearBool == true){
+        if (controlButtons.buttonBool[2] == true){
             nearFarGame();
     //        System.out.println("nearBool weszlo");
         }
 
-        if (startBool == true){
+        if (controlButtons.buttonBool[0] == true){
             nextStep();
   //          System.out.println("nextStepBool cos robi");
         }
@@ -194,40 +177,9 @@ public class Game extends JPanel {
         }
     }
 
-    /*public void initialize(ButtonModel[][] squaresModel1){
-
-        int widthSize = squaresModel1[0].length;
-        int heightSize = squaresModel1[1].length;
-        GridBagConstraints GBC = new GridBagConstraints();
-        GBC.weightx = 1;
-        GBC.weighty = 1;
-        GBC.fill = GridBagConstraints.BOTH;
-
-        for (int i=0; i<widthSize; i++){
-            for(int j=0; j<heightSize; j++){
-                GBC.gridx = i;
-                GBC.gridy = j;
-
-                squaresModel1[i][j].setBool(true);
-
-                squaresModel1[i][j].changeBool();
-
-                boolean testBool;
-                testBool = squaresModel1[i][j].getBool();
-                String testString;
-                testString = String.valueOf(testBool);
-                System.out.println(testString);
-           //     JButton buttoner = new JButton();
-           //     buttoner = squaresModel1[i][j].getButton();
-           //     addGameSquare(buttoner, GBC);
-
-              //  addGameSquare(gameSquares1[i][j].but, GBC);
-            }
-        }
-    }*/
-
-    public Game(Scheme scheme1) {
+    public GamePanel(Scheme scheme1, ControlButtons controlButtons1) {
         this.newScheme = scheme1;
+        this.controlButtons = controlButtons1;
         init();
     }
 

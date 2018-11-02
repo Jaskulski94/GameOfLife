@@ -23,18 +23,18 @@ import javax.swing.border.EtchedBorder;
  *
  */
 
-//public class Scheme extends JFrame implements WindowListener, WindowFocusListener, WindowStateListener {
-
 public class Scheme extends JFrame  {
 
 
-    private Title titlePanel;
-    private Buttons buttonsPanel;
-    private Game gamePanel;
+    private TitlePanel titlePanel;
+    private ButtonsPanel buttonsPanel;
+    private GamePanel gamePanel;
 
     private Font customFont;
     private int frameWidth;
     private int frameHeight;
+
+    ControlButtons controlButtons;
 
     public Font getCustomFont() {
         try {
@@ -66,15 +66,17 @@ public class Scheme extends JFrame  {
     }
 
     public void init() {
+        String[] names = {"START", "SLOW", "NEAR", "CLEAR", "EXIT"};
+        controlButtons = new ControlButtons(names);
 
-        titlePanel = new Title(this);
+        titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));
 
-        gamePanel = new Game(this);
+        gamePanel = new GamePanel(this, controlButtons);
         gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
 
-        buttonsPanel = new Buttons(this, gamePanel);
+        buttonsPanel = new ButtonsPanel(this, gamePanel, controlButtons);
         buttonsPanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 2 / 12));
 
         customFont = getCustomFont();
@@ -118,69 +120,8 @@ public class Scheme extends JFrame  {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+    //    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-     /*   WindowListener exitListener = new WindowAdapter() {
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.out.println("System is closing");
-                System.exit(0);
-
-            }
-        };
-
-        this.addWindowListener(exitListener);    }
-
-    @Override
-    public void windowGainedFocus(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowLostFocus(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowOpened(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowStateChanged(WindowEvent windowEvent) {
-
-    }*/
     }
 }
 
