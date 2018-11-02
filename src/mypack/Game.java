@@ -16,23 +16,21 @@ public class Game extends JPanel {
 
     private Scheme newScheme;
 
-    JButton[][] squareButton1;
-    boolean[][] squareBool1;
+    public JButton[][] squareButton1;
+    public boolean[][] squareBool1;
 
     boolean startBool = false;
     boolean slowBool = false;
     boolean nearBool = false;
     boolean clearBool = false;
 
+    boolean gameRunBool;
+
     int size;
 
     public void changeBool(boolean bool1){
         bool1 ^= true;
     }
-
-    /*public void changeStartBool(){
-        startBool ^= true;
-    }*/
 
     public void setStartBool(boolean bool1){
         startBool = bool1;
@@ -50,30 +48,6 @@ public class Game extends JPanel {
         clearBool = bool1;
     }
 
- //   int panelWidth;
- //   int panelHeight;
-
-   /* public class ButtonModel {
-        JButton but;
-        boolean butBool = false;
-
-        public boolean getBool(){
-            return butBool;
-        }
-
-        public void setBool(boolean bool1){
-            this.butBool = bool1;
-        }
-
-        public void changeBool(){
-            this.butBool ^= true;
-        }
-
-        public JButton getButton (){
-            return but;
-        }
-    }*/
-
     public void addGameSquare(JButton but1, boolean bool1, GridBagConstraints GBC){
         but1 = new JButton();
         but1.setBorderPainted(true);
@@ -88,8 +62,11 @@ public class Game extends JPanel {
     public void initialize(int size){
         int gameSize = size;
 
-        JButton[][] squareButton1 = new JButton[gameSize][gameSize];
-        boolean[][] squareBool1 = new boolean[gameSize+2][gameSize+2];
+        /*JButton[][] squareButton1 = new JButton[gameSize][gameSize];
+        boolean[][] squareBool1 = new boolean[gameSize+2][gameSize+2];*/
+
+        squareButton1 = new JButton[gameSize][gameSize];
+        squareBool1 = new boolean[gameSize+2][gameSize+2];
 
         int widthSize = squareButton1[0].length;
         int HeightSize = squareButton1[1].length;
@@ -139,33 +116,54 @@ public class Game extends JPanel {
     }
 
     public void clearGame(){
+        System.out.println("\nZaczynamy czyszczenie");
+        Component[] componentList = this.getComponents();
+        for(Component c : componentList){
+            this.remove(c);
+        }
+        System.out.println("Wyczyszczone");
+
         initialize(size);
-        System.out.println("funkcja clearGame "+String.valueOf(clearBool));
+        System.out.println("Zainicjalizowano nowe buttony");
+
+        System.out.println("wartosc clearGame "+String.valueOf(clearBool));
         clearBool = false;
-    //    startBool = false;
+        System.out.println("clearBool zmieniony na: "+String.valueOf(clearBool)+"\n");
+
+        //    startBool = false;
     }
 
     public void nextStep() {
         System.out.println("funkcja nextStep " + String.valueOf(startBool));
+
         int aliveCells = 0;
         for (int i = 1; i < size; i++) {
             for (int j = 1; j < size; j++) {
-                for (int x = -1; x <= 2; x++) {
-                    for (int y = -1; y <= 2; y++) {
+            //    String color = String.valueOf(squareButton1[i][j].getBackground());
+                System.out.println(String.valueOf(squareBool1[i][j]));
+                for (int x = -1; x <= 1; x++) {
+                    for (int y = -1; y <= 1; y++) {
                         if (!((x == 0) && (y == 0))) {
-                            if (squareBool1[i + x][j + y]) {
+                        //    if (squareBool1[i + x][j + y]) {
                                 aliveCells++;
-                            }
+                        //    }
                         }
                     }
                 }
-                System.out.println(aliveCells);
+                /*if (aliveCells != 0)
+                System.out.println("amount of alive neighbours: "+aliveCells);*/
                 aliveCells = 0;
             }
         }
     }
 
     public void playGame(){
+        if (clearBool == true){
+            System.out.println("funkcja clear "+String.valueOf(clearBool));
+            clearGame();
+            clearBool = false;
+        }
+
         if (slowBool == true){
             tempoFast();
     //        System.out.println("tempoFastBool weszlo");
@@ -179,27 +177,18 @@ public class Game extends JPanel {
     //        System.out.println("nearBool weszlo");
         }
 
-        if (clearBool == true){
-            System.out.println("funkcja clear "+String.valueOf(clearBool));
-         //   startBool = false;
-            clearGame();
-            clearBool = false;
-         //   startBool = false;
-   //         System.out.println("clearBool cos robi");
-        }
-
         if (startBool == true){
             nextStep();
   //          System.out.println("nextStepBool cos robi");
         }
-    //    System.out.println(String.valueOf(startBool)+" startbool");
 
     }
 
     public void runGame(){
 
         System.out.println("runGame cos robi");
-        boolean gameRunBool = true;
+
+        gameRunBool = true;
         while(gameRunBool){
             playGame();
         }
@@ -249,10 +238,16 @@ public class Game extends JPanel {
 
         this.setBackground(Color.WHITE);
 
-        GameEngine myGame = new GameEngine();
-
-        size = 20;
+        size = 5;
         initialize(size);
 
+        GameEngine myGame = new GameEngine();
+
+        squareBool1[1][1] = true;
+        System.out.println(String.valueOf(squareBool1[1][1]));
+
+      /*  Color c = squareButton1[1][1].getBackground();
+        String color = String.valueOf(c);
+        System.out.println(color);*/
     }
 }

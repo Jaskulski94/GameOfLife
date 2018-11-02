@@ -33,7 +33,6 @@ public class Title extends JPanel {
         Font customFontBig = newScheme.getCustomFont();
         customFontBig = customFontBig.deriveFont(94f);
 
-
         int panelWidth = newScheme.getFrameWidth();
         int panelHeight = newScheme.getFrameHeight();
         panelHeight /= 12;
@@ -46,5 +45,6 @@ public class Title extends JPanel {
         printWord("LIFE ", customFontBig);
 
         this.setBackground(Color.BLACK);
+
     }
 }

@@ -1,6 +1,13 @@
 package mypack;
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
+
+import java.awt.event.WindowAdapter;
+
 import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
@@ -16,7 +23,10 @@ import javax.swing.border.EtchedBorder;
  *
  */
 
-public class Scheme extends JFrame {
+//public class Scheme extends JFrame implements WindowListener, WindowFocusListener, WindowStateListener {
+
+public class Scheme extends JFrame  {
+
 
     private Title titlePanel;
     private Buttons buttonsPanel;
@@ -58,20 +68,20 @@ public class Scheme extends JFrame {
     public void init() {
 
         titlePanel = new Title(this);
-        titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight/12));
+        titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));
 
         gamePanel = new Game(this);
-        gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight*7/12));
+        gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
 
         buttonsPanel = new Buttons(this, gamePanel);
-        buttonsPanel.setPreferredSize(new Dimension(frameWidth, frameHeight*2/12));
+        buttonsPanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 2 / 12));
 
         customFont = getCustomFont();
 
         Dimension frameDim = new Dimension(frameWidth, frameHeight);
         this.setSize(frameDim);
-    //    this.setMinimumSize(frameDim);
+        //    this.setMinimumSize(frameDim);
 
         GridBagLayout layout1 = new GridBagLayout();
         this.setLayout(layout1);
@@ -106,8 +116,71 @@ public class Scheme extends JFrame {
 
         gamePanel.runGame();
 
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+     /*   WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("System is closing");
+                System.exit(0);
+
+            }
+        };
+
+        this.addWindowListener(exitListener);    }
+
+    @Override
+    public void windowGainedFocus(WindowEvent windowEvent) {
+
     }
 
+    @Override
+    public void windowLostFocus(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowOpened(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent windowEvent) {
+
+    }
+
+    @Override
+    public void windowStateChanged(WindowEvent windowEvent) {
+
+    }*/
+    }
 }
 

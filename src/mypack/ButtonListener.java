@@ -7,21 +7,39 @@ import java.awt.event.ActionListener;
 public class ButtonListener implements ActionListener {
 
     Game gamePanel;
-    boolean bool1;
+    boolean bool;
     JButton but;
+
+    public void changeButtonAndBool (String currentText1, String name1, String name2, JButton but1, boolean bool1){
+        if (currentText1 == name1){
+            but1.setText(name2);
+            bool1 = true;
+        } else if (currentText1 == name2){
+            but1.setText(name1);
+            bool1 = false;
+        }
+
+    }
 
     public ButtonListener(Game game1, boolean bool1, JButton but1) {
         this.gamePanel = game1;
-        this.bool1 = bool1;
+        this.bool = bool1;
         this.but = but1;
     }
 
     public void actionPerformed(ActionEvent arg0) {
 
-        /*gamePanel.changeBool(bool1);
+/*        String currentText = but.getText();
 
-        bool1 ^= true;
-*/
+        changeButtonAndBool(currentText,"STOP", "START", but, bool);
+        changeButtonAndBool(currentText,"SLOW", "FAST", but, bool);
+        changeButtonAndBool(currentText,"NEAR", "FAR", but, bool);
+
+        if (currentText.equals("CLEAR")) {
+            gamePanel.setClearBool(true);
+        }*/
+
+
         String currentText = but.getText();
 
         if (currentText.equals("START")) {
