@@ -16,8 +16,8 @@ public class GamePanel extends JPanel {
 
     private Scheme newScheme;
 
-    public JButton[][] squareButton1;
-    public boolean[][] squareBool1;
+    /*public JButton[][] squareButton1;
+    public boolean[][] squareBool1;*/
 
    /* boolean startBool = false;
     boolean slowBool = false;
@@ -25,6 +25,7 @@ public class GamePanel extends JPanel {
     boolean clearBool = false;*/
 
     ControlButtons controlButtons;
+    GameButtons[][] gameButtons;
     GameEngine gameEngine;
 
    // boolean[] controlBools;
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel {
     int size;
 
 
-    public void addGameSquare(JButton but1, boolean bool1, GridBagConstraints GBC){
+ /*   public void addGameSquare(JButton but1, boolean bool1, GridBagConstraints GBC, JPanel thisPanel1){
         but1 = new JButton();
         but1.setBorderPainted(true);
         but1.setFocusPainted(false);
@@ -42,10 +43,10 @@ public class GamePanel extends JPanel {
         but1.setContentAreaFilled(true);
         SquareListener squareLis = new SquareListener(bool1, but1);
         but1.addActionListener(squareLis);
-        this.add(but1, GBC);
+        thisPanel1.add(but1, GBC);
     }
 
-    public void initialize(int size){
+    public void initialize(int size, JPanel thisPanel1){
         int gameSize = size;
 
         squareButton1 = new JButton[gameSize][gameSize];
@@ -62,7 +63,7 @@ public class GamePanel extends JPanel {
             for(int j=0; j<HeightSize; j++){
                GBC.gridx = i;
                GBC.gridy = j;
-               addGameSquare(squareButton1[i][j], squareBool1[i+1][j+1], GBC);
+               addGameSquare(squareButton1[i][j], squareBool1[i+1][j+1], GBC, thisPanel1);
             }
         }
         System.out.println("Game has been initialized");
@@ -98,15 +99,15 @@ public class GamePanel extends JPanel {
         System.out.println("funkcja nearFarGame "+String.valueOf(controlButtons.buttonBool[2]));
     }
 
-    public void clearGame(){
+    public void clearGame(JPanel thisPanel1){
         System.out.println("\nZaczynamy czyszczenie");
-        Component[] componentList = this.getComponents();
+        Component[] componentList = thisPanel1.getComponents();
         for(Component c : componentList){
             this.remove(c);
         }
         System.out.println("Wyczyszczone");
 
-        initialize(size);
+        initialize(size, thisPanel1);
         System.out.println("Zainicjalizowano nowe buttony");
 
         System.out.println("wartosc clearGame "+String.valueOf(controlButtons.buttonBool[3]));
@@ -133,17 +134,17 @@ public class GamePanel extends JPanel {
                         }
                     }
                 }
-                /*if (aliveCells != 0)
-                System.out.println("amount of alive neighbours: "+aliveCells);*/
+                *//*if (aliveCells != 0)
+                System.out.println("amount of alive neighbours: "+aliveCells);*//*
                 aliveCells = 0;
             }
         }
     }
 
-    public void playGame(){
+    public void playGame(JPanel thisPanel1){
         if (controlButtons.buttonBool[3] == true){
             System.out.println("funkcja clear "+String.valueOf(controlButtons.buttonBool[3]));
-            clearGame();
+            clearGame(thisPanel1);
             controlButtons.setBool(3,false);
         }
 
@@ -167,19 +168,21 @@ public class GamePanel extends JPanel {
 
     }
 
-    public void runGame(){
+    public void runGame(JPanel thisPanel1){
 
         System.out.println("runGame cos robi");
 
         gameRunBool = true;
         while(gameRunBool){
-            playGame();
+            playGame(thisPanel1);
         }
-    }
+    }*/
 
-    public GamePanel(Scheme scheme1, ControlButtons controlButtons1) {
+    public GamePanel(Scheme scheme1, ControlButtons controlButtons1, GameButtons[][] gameButtons1, GameEngine gameEngine1) {
         this.newScheme = scheme1;
         this.controlButtons = controlButtons1;
+    //    this.gameButtons = gameButtons1;
+        this.gameEngine = gameEngine1;
         init();
     }
 
@@ -190,16 +193,20 @@ public class GamePanel extends JPanel {
 
         this.setBackground(Color.WHITE);
 
+        boolean runGameBool = true;
+     //   gameEngine.runGame(runGameBool, 5, gameButtons, this);
+
         size = 5;
-        initialize(size);
+     //   gameEngine.initialize(size, gameButtons, this);
 
-        GameEngine myGame = new GameEngine();
+        gameButtons = new GameButtons[size][size];
 
-        squareBool1[1][1] = true;
-        System.out.println(String.valueOf(squareBool1[1][1]));
+        runGameBool = true;
+        GameEngine gameEngine = new GameEngine(size, controlButtons, gameButtons, this);
+        gameEngine.runGame(runGameBool, size, gameButtons, this);
 
-      /*  Color c = squareButton1[1][1].getBackground();
-        String color = String.valueOf(c);
-        System.out.println(color);*/
+        /*squareBool1[1][1] = true;
+        System.out.println(String.valueOf(squareBool1[1][1]));*/
+
     }
 }

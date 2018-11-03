@@ -43,6 +43,8 @@ public class ButtonListener implements ActionListener {
         setTrueButtonAndBool(3, currentText, "CLEAR", controlButtons);
         setTrueButtonAndBool(4, currentText, "EXIT", controlButtons);
 
+        currentText = controlButtons.controlBut[index].getText();
+        System.out.println(currentText);
         System.out.println(controlButtons.buttonBool[index]);
 
     }

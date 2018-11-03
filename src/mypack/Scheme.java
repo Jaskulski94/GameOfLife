@@ -25,7 +25,6 @@ import javax.swing.border.EtchedBorder;
 
 public class Scheme extends JFrame  {
 
-
     private TitlePanel titlePanel;
     private ButtonsPanel buttonsPanel;
     private GamePanel gamePanel;
@@ -35,6 +34,8 @@ public class Scheme extends JFrame  {
     private int frameHeight;
 
     ControlButtons controlButtons;
+    GameButtons[][] gameButtons;
+    GameEngine gameEngine;
 
     public Font getCustomFont() {
         try {
@@ -66,13 +67,13 @@ public class Scheme extends JFrame  {
     }
 
     public void init() {
-        String[] names = {"START", "SLOW", "NEAR", "CLEAR", "EXIT"};
+        String[] names = {"STOP", "SLOW", "NEAR", "CLEAR", "EXIT"};
         controlButtons = new ControlButtons(names);
 
         titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));
 
-        gamePanel = new GamePanel(this, controlButtons);
+        gamePanel = new GamePanel(this, controlButtons, gameButtons, gameEngine);
         gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
 
@@ -116,7 +117,8 @@ public class Scheme extends JFrame  {
 
         this.setVisible(true);
 
-        gamePanel.runGame();
+        /*boolean runGameBool = true;
+        gamePanel.gameEngine.runGame(runGameBool, 5, gameButtons, gamePanel);*/
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
