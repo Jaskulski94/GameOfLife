@@ -168,9 +168,9 @@ public class GameEngine {
 
         initialize();
 
-        while(gameRunBool1){
+        /*while(gameRunBool1){
             playGame(thisPanel1);
-        }
+        }*/
     }
 
     public void init() {
