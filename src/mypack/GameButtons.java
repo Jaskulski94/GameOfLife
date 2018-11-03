@@ -37,8 +37,17 @@ public class GameButtons {
         return indexX;
     }
 
+    public int getIndexY(){
+        return indexY;
+    }
+
+
     public void setIndexX(int index1){
         indexX = index1;
+    }
+
+    public void setIndexY(int index1){
+        indexY = index1;
     }
 
     public void init() {

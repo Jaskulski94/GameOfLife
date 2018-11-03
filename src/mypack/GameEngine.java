@@ -55,12 +55,14 @@ public class GameEngine {
             for(int j=0; j<size; j++){
                 GBC.gridx = i;
                 GBC.gridy = j;
-    //            gameButtons[i][j].addGameSquare(i, j, GBC, panel);
-                gameButtons[i][j].setIndexX(1);
-    //            gameButtons[1][1].setIndexX(1);
+                gameButtons[i][j] = new GameButtons();
+                gameButtons[i][j].addGameSquare(i, j, GBC, panel);
+                gameButtons[i][j].setIndexX(i);
+                gameButtons[i][j].setIndexY(j);
                 int x = gameButtons[i][j].getIndexX();
+                int y = gameButtons[i][j].getIndexY();
 
-                System.out.println(x);
+                System.out.println(x + " " + y);
             }
         }
         System.out.println("Game has been initialized");
@@ -165,10 +167,10 @@ public class GameEngine {
     public void runGame(boolean gameRunBool1, int size1, GameButtons[][] gameButtons1, JPanel thisPanel1){
 
         initialize();
-/*
+
         while(gameRunBool1){
             playGame(thisPanel1);
-        }*/
+        }
     }
 
     public void init() {
