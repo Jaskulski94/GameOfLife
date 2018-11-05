@@ -19,14 +19,7 @@ public class GameEngine {
         init();
     }
 
-
- /*   public void initialize(int size, GameButtons[][] gameButtons1, JPanel thisPanel1){
-   //     int gameSize = size;
-
-        gameButtons1 = new GameButtons[size][size];
-
-        *//*int widthSize = gameButtons1[0].length;
-        int HeightSize = gameButtons1[1].length;*//*
+    public void initialize(GameButtons gameButtons1[][]){
 
         GridBagConstraints GBC = new GridBagConstraints();
         GBC.weightx = 1;
@@ -37,30 +30,12 @@ public class GameEngine {
             for(int j=0; j<size; j++){
                 GBC.gridx = i;
                 GBC.gridy = j;
-                gameButtons1[i][j].addGameSquare(i, j, GBC, thisPanel1);
-            }
-        }
-        System.out.println("Game has been initialized");
-    }*/
-
-    public void initialize(){
-     //   gameButtons = new GameButtons[size][size];
-
-        GridBagConstraints GBC = new GridBagConstraints();
-        GBC.weightx = 1;
-        GBC.weighty = 1;
-        GBC.fill = GridBagConstraints.BOTH;
-
-        for (int i=0; i<size; i++){
-            for(int j=0; j<size; j++){
-                GBC.gridx = i;
-                GBC.gridy = j;
-                gameButtons[i][j] = new GameButtons();
-                gameButtons[i][j].addGameSquare(i, j, GBC, panel);
-                gameButtons[i][j].setIndexX(i);
-                gameButtons[i][j].setIndexY(j);
-                int x = gameButtons[i][j].getIndexX();
-                int y = gameButtons[i][j].getIndexY();
+                gameButtons1[i][j] = new GameButtons();
+                gameButtons1[i][j].addGameSquare(i, j, GBC, panel);
+                gameButtons1[i][j].setIndexX(i);
+                gameButtons1[i][j].setIndexY(j);
+                int x = gameButtons1[i][j].getIndexX();
+                int y = gameButtons1[i][j].getIndexY();
 
                 System.out.println(x + " " + y);
             }
@@ -83,8 +58,6 @@ public class GameEngine {
     }
 
     public void tempoSlow(){
-        //     System.out.println("funkcja tempoSlow");
-
         try
         {
             Thread.sleep(1200);
@@ -107,11 +80,11 @@ public class GameEngine {
         }
         System.out.println("Wyczyszczone");
 
-        initialize();
+        initialize(gameButtons);
         System.out.println("Zainicjalizowano nowe buttony");
 
         System.out.println("wartosc clearGame "+String.valueOf(controlButtons.buttonBool[3]));
-        //clearBool = false;
+
         controlButtons.buttonBool[3] = false;
         System.out.println("clearBool zmieniony na: "+String.valueOf(controlButtons.buttonBool[3])+"\n");
 
@@ -166,14 +139,11 @@ public class GameEngine {
 
     public void runGame(boolean gameRunBool1, int size1, GameButtons[][] gameButtons1, JPanel thisPanel1){
 
-        initialize();
-
-        /*while(gameRunBool1){
+        while(gameRunBool1){
             playGame(thisPanel1);
-        }*/
+        }
     }
 
     public void init() {
-    //    size = 5;
     }
 }

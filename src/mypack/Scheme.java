@@ -1,12 +1,6 @@
 package mypack;
 
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
-
-import java.awt.event.WindowAdapter;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,17 +61,18 @@ public class Scheme extends JFrame  {
     }
 
     public void init() {
+        int size = 5;
         String[] names = {"STOP", "SLOW", "NEAR", "CLEAR", "EXIT"};
         controlButtons = new ControlButtons(names);
+        gameButtons = new GameButtons[size][size];
 
         titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));
 
-        gamePanel = new GamePanel(this, controlButtons, gameButtons, gameEngine);
+        gamePanel = new GamePanel(controlButtons, gameButtons, gameEngine);
         gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
-
-        buttonsPanel = new ButtonsPanel(this, gamePanel, controlButtons);
+        buttonsPanel = new ButtonsPanel(this, controlButtons);
         buttonsPanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 2 / 12));
 
         customFont = getCustomFont();
@@ -117,8 +112,11 @@ public class Scheme extends JFrame  {
 
         this.setVisible(true);
 
-        /*boolean runGameBool = true;
-        gamePanel.gameEngine.runGame(runGameBool, 5, gameButtons, gamePanel);*/
+        boolean runGameBool = true;
+
+        gameEngine = new GameEngine(size, controlButtons, gameButtons, gamePanel);
+        gameEngine.initialize(gameButtons);
+        gameEngine.runGame(runGameBool, size, gameButtons, gamePanel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 

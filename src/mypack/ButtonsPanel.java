@@ -16,13 +16,10 @@ public class ButtonsPanel extends JPanel {
 
     private Scheme newScheme;
 
-    private GamePanel gamePanel;
-
     ControlButtons controlButtons;
 
-    public ButtonsPanel(Scheme scheme1, GamePanel game1, ControlButtons controlButtons1) {
+    public ButtonsPanel(Scheme scheme1, ControlButtons controlButtons1) {
         this.newScheme = scheme1;
-        this.gamePanel = game1;
         this.controlButtons = controlButtons1;
 
         init();

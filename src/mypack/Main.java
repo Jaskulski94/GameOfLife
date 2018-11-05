@@ -1,7 +1,5 @@
 package mypack;
 
-import java.awt.GraphicsEnvironment;
-
 /**
  * @author Jakub Jaskulski
  * @version 1.0

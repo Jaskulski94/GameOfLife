@@ -5,11 +5,10 @@ import java.awt.*;
 
 public class GameButtons {
 
-    //  int numberOfGameButtons;
     public int indexX;
     public int indexY;
     public JButton gameButton;
-    public SquareListener gameButtonListener;
+
     public boolean gameButtonBool;
 
     public GameButtons() {
