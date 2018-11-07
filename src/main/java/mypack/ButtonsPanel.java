@@ -3,6 +3,9 @@ package mypack;
 import javax.swing.*;
 import java.awt.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Jakub Jaskulski
  * @version 1.0
@@ -16,9 +19,9 @@ public class ButtonsPanel extends JPanel {
 
     private Scheme newScheme;
 
-    ControlButtons controlButtons;
+    List<ControlButtons> controlButtons;
 
-    public ButtonsPanel(Scheme scheme1, ControlButtons controlButtons1) {
+    public ButtonsPanel(Scheme scheme1, List<ControlButtons> controlButtons1) {
         this.newScheme = scheme1;
         this.controlButtons = controlButtons1;
 
@@ -36,8 +39,8 @@ public class ButtonsPanel extends JPanel {
         int panelHeight = newScheme.getFrameHeight();
         panelHeight *= 0.2;
 
-        for (int i=0; i<controlButtons.numberOfButton; i++){
-            controlButtons.addButton(i, panelHeight, customFont, this);
+        for (int i=0; i<controlButtons.size(); i++){
+            controlButtons.get(i).addButton(panelHeight, customFont, this);
         }
 
     }

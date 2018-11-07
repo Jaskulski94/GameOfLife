@@ -2,15 +2,16 @@ package mypack;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class GameEngine {
 
-    public ControlButtons controlButtons;
-    public GameButtons[][] gameButtons;
+    public List<ControlButtons> controlButtons;
+    public List<List<GameButtons>> gameButtons;
     public JPanel panel;
     public int size;
 
-    public GameEngine(int size1, ControlButtons controlButtons1, GameButtons[][] gameButtons1, JPanel thisPanel1) {
+    public GameEngine(int size1, List<ControlButtons> controlButtons1, List<List<GameButtons>> gameButtons1, JPanel thisPanel1) {
         this.size = size1;
 
         this.controlButtons = controlButtons1;
@@ -19,7 +20,7 @@ public class GameEngine {
         init();
     }
 
-    public void initialize(GameButtons gameButtons1[][]){
+    public void initialize(List<List<GameButtons>> gameButtons1){
 
         GridBagConstraints GBC = new GridBagConstraints();
         GBC.weightx = 1;
@@ -30,12 +31,12 @@ public class GameEngine {
             for(int j=0; j<size; j++){
                 GBC.gridx = i;
                 GBC.gridy = j;
-                gameButtons1[i][j] = new GameButtons();
-                gameButtons1[i][j].addGameSquare(i, j, GBC, panel);
-                gameButtons1[i][j].setIndexX(i);
-                gameButtons1[i][j].setIndexY(j);
-                int x = gameButtons1[i][j].getIndexX();
-                int y = gameButtons1[i][j].getIndexY();
+         //       gameButtons1.get(i).get(j) = new GameButtons();
+                gameButtons1.get(i).get(j).addGameSquare(i, j, GBC, panel);
+                gameButtons1.get(i).get(j).setIndexX(i);
+                gameButtons1.get(i).get(j).setIndexY(j);
+                int x = gameButtons1.get(i).get(j).getIndexX();
+                int y = gameButtons1.get(i).get(j).getIndexY();
 
                 System.out.println(x + " " + y);
             }
@@ -69,7 +70,7 @@ public class GameEngine {
     }
 
     public void nearFarGame(){
-        System.out.println("funkcja nearFarGame "+String.valueOf(controlButtons.buttonBool[2]));
+        System.out.println("funkcja nearFarGame "+String.valueOf(controlButtons.get(2).buttonBool));
     }
 
     public void clearGame(JPanel thisPanel1){
@@ -83,21 +84,21 @@ public class GameEngine {
         initialize(gameButtons);
         System.out.println("Zainicjalizowano nowe buttony");
 
-        System.out.println("wartosc clearGame "+String.valueOf(controlButtons.buttonBool[3]));
+        System.out.println("wartosc clearGame "+String.valueOf(controlButtons.get(3).buttonBool));
 
-        controlButtons.buttonBool[3] = false;
-        System.out.println("clearBool zmieniony na: "+String.valueOf(controlButtons.buttonBool[3])+"\n");
+        controlButtons.get(3).buttonBool = false;
+        System.out.println("clearBool zmieniony na: "+String.valueOf(controlButtons.get(3).buttonBool)+"\n");
 
     }
 
     public void nextStep() {
-        System.out.println("funkcja nextStep " + String.valueOf(controlButtons.buttonBool[0]));
+        System.out.println("funkcja nextStep " + String.valueOf(controlButtons.get(0).buttonBool));
 
         int aliveCells = 0;
         for (int i = 1; i < size; i++) {
             for (int j = 1; j < size; j++) {
                 //    String color = String.valueOf(squareButton1[i][j].getBackground());
-                System.out.println(String.valueOf(gameButtons[i][j].getGameButtonBool()));
+                System.out.println(String.valueOf(gameButtons.get(i).get(j).getGameButtonBool()));
                 for (int x = -1; x <= 1; x++) {
                     for (int y = -1; y <= 1; y++) {
                         if (!((x == 0) && (y == 0))) {
@@ -115,29 +116,36 @@ public class GameEngine {
     }
 
     public void playGame(JPanel thisPanel1){
-        if (controlButtons.buttonBool[3] == true){
-            System.out.println("funkcja clear "+String.valueOf(controlButtons.buttonBool[3]));
+        if (controlButtons.get(3).buttonBool == true){
+            System.out.println("funkcja clear "+String.valueOf(controlButtons.get(3).buttonBool));
             clearGame(thisPanel1);
-            controlButtons.setBool(3,false);
+            controlButtons.get(3).setBool(false);
+    //        controlButtons.get(3).setButtonBool(false);
         }
 
-        if (controlButtons.buttonBool[1] == true){
+        /*Do sprawdzenia, jak działa lombok
+
+
+
+                */
+
+        if (controlButtons.get(1).buttonBool == true){
             tempoFast();
         } else {
             tempoSlow();
         }
 
-        if (controlButtons.buttonBool[2] == true){
+        if (controlButtons.get(2).buttonBool == true){
             nearFarGame();
         }
 
-        if (controlButtons.buttonBool[0] == true){
+        if (controlButtons.get(0).buttonBool == true){
             nextStep();
         }
 
     }
 
-    public void runGame(boolean gameRunBool1, int size1, GameButtons[][] gameButtons1, JPanel thisPanel1){
+    public void runGame(boolean gameRunBool1, int size1, List<List<GameButtons>> gameButtons1, JPanel thisPanel1){
 
         while(gameRunBool1){
             playGame(thisPanel1);

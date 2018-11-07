@@ -3,47 +3,41 @@ package mypack;
 import javax.swing.*;
 import java.awt.*;
 
-public class ControlButtons {
+import lombok.*;
 
-    int numberOfButton;
-    int index[];
-    JButton[] controlBut;
-    ButtonListener[] buttonListener;
-    String[] buttonText;
-    boolean[] buttonBool;
+@Data public class ControlButtons {
 
-    public ControlButtons (String[] names1){
-        numberOfButton = names1.length;
-        index = new int [numberOfButton];
-        buttonText = new String [numberOfButton];
-        buttonBool = new boolean[numberOfButton];
-        for (int i=0; i<numberOfButton; i++){
-            index[i] = i;
-            buttonText[i] = names1[i];
-        }
-        controlBut = new JButton[numberOfButton];
-        buttonListener = new ButtonListener[numberOfButton];
+
+    JButton controlBut;
+    ButtonListener buttonListener;
+    String buttonText;
+    boolean buttonBool;
+
+    public ControlButtons (String name1){
+
+        buttonText = name1;
+        buttonBool = false;
     }
 
-    public void addButton (int index1, int panelHeight1, Font customFont1, JPanel thisPanel1) {
-        controlBut[index1] = new JButton(buttonText[index1]);
-        controlBut[index1].setBorderPainted(false);
-        controlBut[index1].setFocusPainted(false);
-        controlBut[index1].setBackground(Color.WHITE);
-        controlBut[index1].setForeground(Color.BLACK);
-        controlBut[index1].setPreferredSize(new Dimension(panelHeight1, panelHeight1));
-        controlBut[index1].setFont(customFont1);
+    public void addButton (int panelHeight1, Font customFont1, JPanel thisPanel1) {
+        controlBut = new JButton(buttonText);
+        controlBut.setBorderPainted(false);
+        controlBut.setFocusPainted(false);
+        controlBut.setBackground(Color.WHITE);
+        controlBut.setForeground(Color.BLACK);
+        controlBut.setPreferredSize(new Dimension(panelHeight1, panelHeight1));
+        controlBut.setFont(customFont1);
 
-        buttonListener[index1] = new ButtonListener(this, index[index1]);
-        controlBut[index1].addActionListener(buttonListener[index1]);
-        thisPanel1.add(controlBut[index1]);
+        buttonListener = new ButtonListener(this);
+        controlBut.addActionListener(buttonListener);
+        thisPanel1.add(controlBut);
     }
 
-    public void setBool (int index1, boolean bool1){
-        buttonBool[index1] = bool1;
+    public void setBool (boolean bool1){
+        buttonBool = bool1;
     }
 
-    public void setButtonText (int index1, String text1){
-        controlBut[index1].setText(text1);
+    public void setButtonText (String text1){
+        controlBut.setText(text1);
     }
 }

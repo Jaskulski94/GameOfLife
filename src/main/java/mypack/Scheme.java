@@ -8,6 +8,11 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
  * @author Jakub Jaskulski
  * @version 1.0
@@ -27,8 +32,8 @@ public class Scheme extends JFrame  {
     private int frameWidth;
     private int frameHeight;
 
-    ControlButtons controlButtons;
-    GameButtons[][] gameButtons;
+    List<List<GameButtons>> gameButtons;
+    List<ControlButtons> controlButtons;
     GameEngine gameEngine;
 
     public Font getCustomFont() {
@@ -65,10 +70,29 @@ public class Scheme extends JFrame  {
     }
 
     public void init() {
+
+        ControlButtons test = new ControlButtons("lol");
+
         int size = 5;
-        String[] names = {"STOP", "SLOW", "NEAR", "CLEAR", "EXIT"};
-        controlButtons = new ControlButtons(names);
-        gameButtons = new GameButtons[size][size];
+
+        String[] namesString = {"STOP", "SLOW", "NEAR", "CLEAR", "EXIT"};
+        List<String> names = new ArrayList<>();
+        names.addAll(Arrays.asList(namesString));
+
+        controlButtons = new ArrayList<>(names.size());
+
+        for (int i = 0; i<names.size(); i++){
+            controlButtons.add(new ControlButtons(names.get(i)));
+        }
+
+        gameButtons = new ArrayList<List<GameButtons>>();
+
+        for (int i = 0; i<size; i++){
+            gameButtons.add(new ArrayList<GameButtons>());
+                for (int j = 0; j<size; j++) {
+                    gameButtons.get(i).add(new GameButtons());
+                }
+        }
 
         titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));

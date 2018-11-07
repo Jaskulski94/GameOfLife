@@ -2,6 +2,7 @@ package mypack;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  * @author Jakub Jaskulski
@@ -15,12 +16,12 @@ import java.awt.*;
 public class GamePanel extends JPanel {
 
 
-    ControlButtons controlButtons;
-    GameButtons[][] gameButtons;
+    List<ControlButtons> controlButtons;
+    List<List<GameButtons>> gameButtons;
     GameEngine gameEngine;
 
 
-    public GamePanel(ControlButtons controlButtons1, GameButtons[][] gameButtons1, GameEngine gameEngine1) {
+    public GamePanel(List<ControlButtons> controlButtons1, List<List<GameButtons>> gameButtons1, GameEngine gameEngine1) {
         this.controlButtons = controlButtons1;
         this.gameButtons = gameButtons1;
         this.gameEngine = gameEngine1;

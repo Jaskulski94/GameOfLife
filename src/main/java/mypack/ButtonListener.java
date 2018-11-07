@@ -6,46 +6,44 @@ import java.awt.event.ActionListener;
 public class ButtonListener implements ActionListener {
 
     ControlButtons controlButtons;
-    int index;
 
-    public void changeButtonAndBool (int index1, String currentText1, String name1, String name2, ControlButtons controlButtons1){
+    public void changeButtonAndBool (String currentText1, String name1, String name2, ControlButtons controlButtons1){
         if (currentText1 == name1){
-            controlButtons1.setButtonText(index, name2);
-            controlButtons1.setBool(index, true);
+            controlButtons1.setButtonText(name2);
+            controlButtons1.setBool(true);
         } else if (currentText1 == name2){
-            controlButtons1.setButtonText(index, name1);
-            controlButtons1.setBool(index, false);
+            controlButtons1.setButtonText(name1);
+            controlButtons1.setBool(false);
         }
     }
 
-    public void setTrueButtonAndBool (int index, String currentText1, String name1, ControlButtons controlButtons1){
+    public void setTrueButtonAndBool (String currentText1, String name1, ControlButtons controlButtons1){
         if (currentText1 == name1){
-            controlButtons1.setBool(index, true);
+            controlButtons1.setBool(true);
         }
     }
 
-    public ButtonListener(ControlButtons controlButtons1, int index1) {
+    public ButtonListener(ControlButtons controlButtons1) {
         this.controlButtons = controlButtons1;
-        this.index = index1;
     }
 
     public void actionPerformed(ActionEvent arg0) {
 
-        String currentText = controlButtons.controlBut[index].getText();
+        String currentText = controlButtons.controlBut.getText();
 
         System.out.println(currentText);
-        System.out.println(controlButtons.buttonBool[index]);
+        System.out.println(controlButtons.buttonBool);
 
-        changeButtonAndBool(0, currentText,"STOP", "START", controlButtons);
-        changeButtonAndBool(1, currentText,"SLOW", "FAST", controlButtons);
-        changeButtonAndBool(2, currentText,"NEAR", "FAR", controlButtons);
+        changeButtonAndBool(currentText,"STOP", "START", controlButtons);
+        changeButtonAndBool(currentText,"SLOW", "FAST", controlButtons);
+        changeButtonAndBool(currentText,"NEAR", "FAR", controlButtons);
 
-        setTrueButtonAndBool(3, currentText, "CLEAR", controlButtons);
-        setTrueButtonAndBool(4, currentText, "EXIT", controlButtons);
+        setTrueButtonAndBool(currentText, "CLEAR", controlButtons);
+        setTrueButtonAndBool(currentText, "EXIT", controlButtons);
 
-        currentText = controlButtons.controlBut[index].getText();
+        currentText = controlButtons.controlBut.getText();
         System.out.println(currentText);
-        System.out.println(controlButtons.buttonBool[index]);
+        System.out.println(controlButtons.buttonBool);
 
     }
 
