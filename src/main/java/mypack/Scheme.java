@@ -36,6 +36,8 @@ public class Scheme extends JFrame  {
     List<ControlButtons> controlButtons;
     GameEngine gameEngine;
 
+    boolean runGameBool;
+
     public Font getCustomFont() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
@@ -71,9 +73,12 @@ public class Scheme extends JFrame  {
 
     public void init() {
 
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+
         ControlButtons test = new ControlButtons("lol");
 
-        int size = 5;
+        int size = 30;
 
         String[] namesString = {"STOP", "SLOW", "NEAR", "CLEAR", "EXIT"};
         List<String> names = new ArrayList<>();
@@ -81,11 +86,26 @@ public class Scheme extends JFrame  {
 
         controlButtons = new ArrayList<>(names.size());
 
+        /*int k = 0;
+        for (ControlButtons cbut : controlButtons){
+            controlButtons.add(new ControlButtons(names.get(k)));
+            k++;
+        }*/
+
         for (int i = 0; i<names.size(); i++){
             controlButtons.add(new ControlButtons(names.get(i)));
         }
 
         gameButtons = new ArrayList<List<GameButtons>>();
+
+
+        /*int i = 0;
+        for (List list : gameButtons){
+            for (GameButtons button : gameButtons.get(i)){
+                gameButtons.get(i).add(new GameButtons());
+            }
+            i++;
+        }*/
 
         for (int i = 0; i<size; i++){
             gameButtons.add(new ArrayList<GameButtons>());
@@ -140,11 +160,11 @@ public class Scheme extends JFrame  {
 
         this.setVisible(true);
 
-        boolean runGameBool = true;
+        runGameBool = true;
 
-        gameEngine = new GameEngine(size, controlButtons, gameButtons, gamePanel);
+        gameEngine = new GameEngine(size, controlButtons, gameButtons, gamePanel, runGameBool);
         gameEngine.initialize(gameButtons);
-        gameEngine.runGame(runGameBool, size, gameButtons, gamePanel);
+        gameEngine.runGame(gamePanel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 

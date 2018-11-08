@@ -9,6 +9,7 @@ public class GameButtons {
     public int indexY;
     public JButton gameButton;
 
+    public boolean nextButtonBool;
     public boolean gameButtonBool;
 
     public GameButtons() {
@@ -23,13 +24,41 @@ public class GameButtons {
         gameButton.setFocusPainted(false);
         gameButton.setBackground(Color.BLACK);
         gameButton.setContentAreaFilled(true);
-        SquareListener gameButtonListener = new SquareListener(gameButtonBool, gameButton);
+        SquareListener gameButtonListener = new SquareListener(this);
         gameButton.addActionListener(gameButtonListener);
         thisPanel1.add(gameButton, GBC);
     }
 
     public boolean getGameButtonBool() {
         return gameButtonBool;
+    }
+
+    public void setGameButtonBool (boolean bool1){
+        gameButtonBool = bool1;
+    }
+
+    public void changeGameButtonBull(){
+        gameButtonBool ^= true;
+    }
+
+    public void changeButtonBackground(){
+        if (gameButtonBool == true)
+            gameButton.setBackground(Color.WHITE);
+        else
+            gameButton.setBackground(Color.BLACK);
+    }
+
+    public void changeButAndBool(){
+        changeGameButtonBull();
+        changeButtonBackground();
+    }
+
+    public void setNextButtonBool (boolean bool1){
+        nextButtonBool = bool1;
+    }
+
+    public boolean getNextButtonBool (){
+        return nextButtonBool;
     }
 
     public int getIndexX(){
