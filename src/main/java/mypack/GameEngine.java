@@ -2,7 +2,6 @@ package mypack;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameEngine {
@@ -35,22 +34,15 @@ public class GameEngine {
             for(int j=0; j<size; j++){
                 GBC.gridx = i;
                 GBC.gridy = j;
-         //       gameButtons1.get(i).get(j) = new GameButtons();
                 gameButtons1.get(i).get(j).addGameSquare(i, j, GBC, panel);
-                gameButtons1.get(i).get(j).setIndexX(i);
-                gameButtons1.get(i).get(j).setIndexY(j);
-                int x = gameButtons1.get(i).get(j).getIndexX();
-                int y = gameButtons1.get(i).get(j).getIndexY();
-
-        //        System.out.println(x + " " + y);
+                gameButtons1.get(i).get(j).setGameButtonBool(false);
+                gameButtons1.get(i).get(j).setNextButtonBool(false);
             }
         }
-    //    System.out.println("Game has been initialized");
     }
 
 
     public void tempoFast(){
-   //     System.out.println("funkcja tempoFast");
 
         try
         {
@@ -65,7 +57,7 @@ public class GameEngine {
     public void tempoSlow(){
         try
         {
-            Thread.sleep(1200);
+            Thread.sleep(900);
         }
         catch(InterruptedException ex)
         {
@@ -74,37 +66,31 @@ public class GameEngine {
     }
 
     public void nearFarGame(){
-   //     System.out.println("funkcja nearFarGame "+String.valueOf(controlButtons.get(2).buttonBool));
+
     }
 
     public void clearGame(JPanel thisPanel1){
-    //    System.out.println("\nZaczynamy czyszczenie");
+
         Component[] componentList = thisPanel1.getComponents();
         for(Component c : componentList){
             thisPanel1.remove(c);
         }
-    //    System.out.println("Wyczyszczone");
 
         initialize(gameButtons);
-    //    System.out.println("Zainicjalizowano nowe buttony");
-
-    //    System.out.println("wartosc clearGame "+String.valueOf(controlButtons.get(3).buttonBool));
 
         controlButtons.get(3).buttonBool = false;
-    //    System.out.println("clearBool zmieniony na: "+String.valueOf(controlButtons.get(3).buttonBool)+"\n");
-
     }
 
     public void nextStep() {
-    //    System.out.println("funkcja nextStep " + String.valueOf(controlButtons.get(0).buttonBool));
+
         int sizeI = 0;
         int sizeJ = 0;
         int aliveCells = 0;
         int i = 0;
         int j = 0;
-        int x, y; //= 0;
-        int ix = 0;
-        int jy = 0;
+        int x, y;
+        int ix;
+        int jy;
         for (List list : gameButtons) {
             sizeJ = gameButtons.size();
             for (GameButtons but : gameButtons.get(i)) {
@@ -131,7 +117,7 @@ public class GameEngine {
                 }
 
                 if (aliveCells != 0){
-        //            System.out.println("alive cells = "+aliveCells);
+
                 }
                 aliveCells = 0;
                 i++;
@@ -144,7 +130,6 @@ public class GameEngine {
                 j = 0;
             }
         }
-  //      System.out.println("krok zakonczony");
 
         for (List list : gameButtons) {
             for (GameButtons but : gameButtons.get(i)) {
@@ -169,41 +154,25 @@ public class GameEngine {
             if (j >= sizeJ) {
                 j = 0;
             }
-
         }
-
-
-        /*for (int i = 1; i < size; i++) {
-            for (int j = 1; j < size; j++) {
-                //    String color = String.valueOf(squareButton1[i][j].getBackground());
-                System.out.println(String.valueOf(gameButtons.get(i).get(j).getGameButtonBool()));
-                for (int x = -1; x <= 1; x++) {
-                    for (int y = -1; y <= 1; y++) {
-                        if (!((x == 0) && (y == 0))) {
-                            //    if (squareBool1[i + x][j + y]) {
-                            aliveCells++;
-                            //    }
-                        }
-                    }
-                }
-                *//*if (aliveCells != 0)
-                System.out.println("amount of alive neighbours: "+aliveCells);*//*
-                aliveCells = 0;
-            }
-        }*/
     }
 
     public void exitGame(){
-   //     System.out.println("funkcja exitGame " + String.valueOf(controlButtons.get(4).buttonBool));
+
         runGameBool = false;
         System.exit(0);
     }
 
     public void playGame(JPanel thisPanel1){
+
         if (controlButtons.get(3).buttonBool == true){
-   //         System.out.println("funkcja clear "+String.valueOf(controlButtons.get(3).buttonBool));
+            controlButtons.get(0).setBool(false);
+            controlButtons.get(0).setButtonText("STOP");
+
             clearGame(thisPanel1);
             controlButtons.get(3).setBool(false);
+
+      //      thisPanel1.repaint();
         }
 
         if (controlButtons.get(1).buttonBool == true){
@@ -218,7 +187,7 @@ public class GameEngine {
 
         if (controlButtons.get(0).buttonBool == true){
             nextStep();
-            thisPanel1.repaint();
+      //      thisPanel1.repaint();
         }
 
         if (controlButtons.get(4).buttonBool == true){
@@ -228,6 +197,7 @@ public class GameEngine {
     }
 
     public void runGame(JPanel thisPanel1){
+
         while(runGameBool){
             playGame(thisPanel1);
         }

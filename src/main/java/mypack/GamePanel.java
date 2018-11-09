@@ -15,16 +15,7 @@ import java.util.List;
 
 public class GamePanel extends JPanel {
 
-
-    List<ControlButtons> controlButtons;
-    List<List<GameButtons>> gameButtons;
-    GameEngine gameEngine;
-
-
-    public GamePanel(List<ControlButtons> controlButtons1, List<List<GameButtons>> gameButtons1, GameEngine gameEngine1) {
-        this.controlButtons = controlButtons1;
-        this.gameButtons = gameButtons1;
-        this.gameEngine = gameEngine1;
+    public GamePanel() {
         init();
     }
 
@@ -32,8 +23,6 @@ public class GamePanel extends JPanel {
 
         GridBagLayout layout1 = new GridBagLayout();
         this.setLayout(layout1);
-
         this.setBackground(Color.WHITE);
-
     }
 }

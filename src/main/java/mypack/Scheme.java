@@ -67,6 +67,21 @@ public class Scheme extends JFrame  {
         return frameHeight;
     }
 
+    public void initializeControlButtons (List<String> names1){
+        for (int i = 0; i<names1.size(); i++){
+            controlButtons.add(new ControlButtons(names1.get(i)));
+        }
+    }
+
+    public void initializeGameButtons (int size1){
+        for (int i = 0; i<size1; i++){
+            gameButtons.add(new ArrayList<GameButtons>());
+            for (int j = 0; j<size1; j++) {
+                gameButtons.get(i).add(new GameButtons());
+            }
+        }
+    }
+
     public Scheme() {
         init();
     }
@@ -76,48 +91,56 @@ public class Scheme extends JFrame  {
         setUndecorated(true);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 
-        ControlButtons test = new ControlButtons("lol");
-
         int size = 30;
 
         String[] namesString = {"STOP", "SLOW", "NEAR", "CLEAR", "EXIT"};
         List<String> names = new ArrayList<>();
         names.addAll(Arrays.asList(namesString));
 
-        controlButtons = new ArrayList<>(names.size());
-
         /*int k = 0;
         for (ControlButtons cbut : controlButtons){
-            controlButtons.add(new ControlButtons(names.get(k)));
+            if (!(k >= controlButtons.size()) && !(k >= gameButtons.size())) {
+                controlButtons.add(new ControlButtons(names.get(k)));
+            }
             k++;
         }*/
 
-        for (int i = 0; i<names.size(); i++){
+        controlButtons = new ArrayList<>(names.size());
+        initializeControlButtons(names);
+
+        /*for (int i = 0; i<names.size(); i++){
             controlButtons.add(new ControlButtons(names.get(i)));
-        }
-
-        gameButtons = new ArrayList<List<GameButtons>>();
-
-
-        /*int i = 0;
-        for (List list : gameButtons){
-            for (GameButtons button : gameButtons.get(i)){
-                gameButtons.get(i).add(new GameButtons());
-            }
-            i++;
         }*/
 
-        for (int i = 0; i<size; i++){
+        /*int sizeI;
+        int i = 0;
+
+        for (List list : gameButtons) {
+            for (GameButtons but : gameButtons.get(i)) {
+                sizeI = list.size();
+                if (i < sizeI){
+                    but = new GameButtons();
+                //    gameButtons.get(i).add(new GameButtons());
+                }
+                i++;
+            }
+            i = 0;
+        }*/
+
+        gameButtons = new ArrayList<>();
+        initializeGameButtons(size);
+
+        /*for (int i = 0; i<size; i++){
             gameButtons.add(new ArrayList<GameButtons>());
                 for (int j = 0; j<size; j++) {
                     gameButtons.get(i).add(new GameButtons());
                 }
-        }
+        }*/
 
         titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));
 
-        gamePanel = new GamePanel(controlButtons, gameButtons, gameEngine);
+        gamePanel = new GamePanel();
         gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
         buttonsPanel = new ButtonsPanel(this, controlButtons);
@@ -167,9 +190,6 @@ public class Scheme extends JFrame  {
         gameEngine.runGame(gamePanel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-    //    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
     }
 }
 

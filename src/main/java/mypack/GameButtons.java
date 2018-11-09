@@ -42,6 +42,7 @@ public class GameButtons {
     }
 
     public void changeButtonBackground(){
+
         if (gameButtonBool == true)
             gameButton.setBackground(Color.WHITE);
         else
@@ -59,23 +60,6 @@ public class GameButtons {
 
     public boolean getNextButtonBool (){
         return nextButtonBool;
-    }
-
-    public int getIndexX(){
-        return indexX;
-    }
-
-    public int getIndexY(){
-        return indexY;
-    }
-
-
-    public void setIndexX(int index1){
-        indexX = index1;
-    }
-
-    public void setIndexY(int index1){
-        indexY = index1;
     }
 
     public void init() {
