@@ -9,7 +9,7 @@ import lombok.*;
 
 
     JButton controlBut;
-    ButtonListener buttonListener;
+    ControlListener controlListener;
     boolean buttonBool;
     String falseText;
     String trueText;
@@ -32,8 +32,8 @@ import lombok.*;
         controlBut.setPreferredSize(new Dimension(panelHeight1, panelHeight1/2));
         controlBut.setFont(customFont1);
 
-        buttonListener = new ButtonListener(this);
-        controlBut.addActionListener(buttonListener);
+        controlListener = new ControlListener(this);
+        controlBut.addActionListener(controlListener);
         thisPanel1.add(controlBut);
     }
 
@@ -49,6 +49,25 @@ import lombok.*;
         } else {
             setBool(true);
         }
+    }
+
+    public void setTrueText (String text1){
+
+        trueText = text1;
+    }
+
+    public String getTrueText (){
+
+        return trueText;
+    }
+
+    public void setFalseText (String text1){
+
+        falseText = text1;
+    }
+
+    public String getFalseText (){
+        return falseText;
     }
 
     public void setBool (boolean bool1){

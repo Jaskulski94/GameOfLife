@@ -14,8 +14,5 @@ public class Main {
 
         Scheme Scheme1 = new Scheme();
         Scheme1.setVisible(true);
-
-    //    System.exit(0);
-
     }
 }

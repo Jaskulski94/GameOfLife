@@ -24,7 +24,7 @@ import java.util.List;
 public class Scheme extends JFrame  {
 
     private TitlePanel titlePanel;
-    private ButtonsPanel buttonsPanel;
+    private ControlPanel controlPanel;
     private GamePanel gamePanel;
 
     private Font customFont;
@@ -96,7 +96,6 @@ public class Scheme extends JFrame  {
             }
         });
 
-
         int size = 30;
 
         String[] falseString = {"START", "FASTER", "CLOSER", "CLEAR", "EXIT"};
@@ -153,8 +152,8 @@ public class Scheme extends JFrame  {
         gamePanel = new GamePanel();
         gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
-        buttonsPanel = new ButtonsPanel(this, controlButtons);
-        buttonsPanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 2 / 12));
+        controlPanel = new ControlPanel(this, controlButtons);
+        controlPanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 2 / 12));
 
         customFont = getCustomFont();
 
@@ -180,16 +179,16 @@ public class Scheme extends JFrame  {
 
         GBC.gridx = 0;
         GBC.gridy = 2;
-        this.add(buttonsPanel, GBC);
+        this.add(controlPanel, GBC);
 
         Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         titlePanel.setBorder(raisedetched);
         gamePanel.setBorder(raisedetched);
-        buttonsPanel.setBorder(raisedetched);
+        controlPanel.setBorder(raisedetched);
 
         titlePanel.setVisible(true);
         gamePanel.setVisible(true);
-        buttonsPanel.setVisible(true);
+        controlPanel.setVisible(true);
 
         this.setVisible(true);
 

@@ -24,8 +24,8 @@ public class GameButtons {
         gameButton.setFocusPainted(false);
         gameButton.setBackground(Color.BLACK);
         gameButton.setContentAreaFilled(true);
-        SquareListener gameButtonListener = new SquareListener(this);
-        gameButton.addActionListener(gameButtonListener);
+        GameListener gameListener = new GameListener(this);
+        gameButton.addActionListener(gameListener);
         thisPanel1.add(gameButton, GBC);
     }
 

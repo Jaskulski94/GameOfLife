@@ -14,13 +14,13 @@ import java.util.List;
  *
  */
 
-public class ButtonsPanel extends JPanel {
+public class ControlPanel extends JPanel {
 
     private Scheme newScheme;
 
     List<ControlButtons> controlButtons;
 
-    public ButtonsPanel(Scheme scheme1, List<ControlButtons> controlButtons1) {
+    public ControlPanel(Scheme scheme1, List<ControlButtons> controlButtons1) {
         this.newScheme = scheme1;
         this.controlButtons = controlButtons1;
 

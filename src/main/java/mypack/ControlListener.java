@@ -3,11 +3,11 @@ package mypack;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonListener implements ActionListener {
+public class ControlListener implements ActionListener {
 
     ControlButtons controlButtons;
 
-    public ButtonListener(ControlButtons controlButtons1) {
+    public ControlListener(ControlButtons controlButtons1) {
         this.controlButtons = controlButtons1;
     }
 

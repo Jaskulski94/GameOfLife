@@ -11,7 +11,16 @@ public class GameEngine {
     public JPanel panel;
     public int size;
     public boolean runGameBool;
-    public boolean nearFarBool = true;
+    public boolean closerFurtherBool = true;
+
+    int sizeI = 0;
+    int sizeJ = 0;
+    int aliveCells = 0;
+    int i = 0;
+    int j = 0;
+    int x, y;
+    int ix;
+    int jy;
 
     public GameEngine(int size1, List<ControlButtons> controlButtons1, List<List<GameButtons>> gameButtons1, JPanel thisPanel1, boolean runGameBool1) {
         this.size = size1;
@@ -22,6 +31,11 @@ public class GameEngine {
 
         this.runGameBool = runGameBool1;
         init();
+    }
+
+    public void refresh (){
+        panel.setVisible(false);
+        panel.setVisible(true);
     }
 
     public void initialize(List<List<GameButtons>> gameButtons1){
@@ -40,6 +54,7 @@ public class GameEngine {
                 gameButtons1.get(i).get(j).setNextButtonBool(false);
             }
         }
+        refresh();
     }
 
 
@@ -73,81 +88,104 @@ public class GameEngine {
         }
     }
 
-    public void nearFarGame(){
+    public void closer(){
+        sizeI = 0;
+        sizeJ = 0;
+        i = 0;
+        j = 0;
+        sizeJ = gameButtons.size();
+        for (List list : gameButtons) {
+            sizeI = list.size();
+            for (GameButtons but : gameButtons.get(i)) {
 
-        int sizeI = 0;
-        int sizeJ = 0;
-        int i = 0;
-        int j = 0;
-        if (controlButtons.get(2).buttonBool && nearFarBool) {
-            sizeJ = gameButtons.size();
-            for (List list : gameButtons) {
-                sizeI = list.size();
-                for (GameButtons but : gameButtons.get(i)) {
-
-                    if ((i < (sizeI / 3)) || (i > sizeI * 2 / 3)) {
-                        gameButtons.get(i).get(j).gameButton.setVisible(false);
-                    }
-
-                    if ((j < (sizeJ / 3)) || (j > sizeJ * 2 / 3)) {
-                        gameButtons.get(i).get(j).gameButton.setVisible(false);
-                    }
-
-                    i++;
-                    if (i >= sizeI) {
-                        i = 0;
-                    }
+                if ((i < (sizeI / 3)) || (i > sizeI * 2 / 3)) {
+                    gameButtons.get(i).get(j).gameButton.setVisible(false);
                 }
-                j++;
-                if (j >= sizeJ) {
-                    j = 0;
+
+                if ((j < (sizeJ / 3)) || (j > sizeJ * 2 / 3)) {
+                    gameButtons.get(i).get(j).gameButton.setVisible(false);
+                }
+
+                i++;
+                if (i >= sizeI) {
+                    i = 0;
                 }
             }
-            nearFarBool = false;
-        }
-
-        if (!controlButtons.get(2).buttonBool && !nearFarBool) {
-            sizeJ = gameButtons.size();
-            for (List list : gameButtons) {
-                sizeI = list.size();
-                for (GameButtons but : gameButtons.get(i)) {
-                    gameButtons.get(i).get(j).gameButton.setVisible(true);
-                    i++;
-                    if (i >= sizeI) {
-                        i = 0;
-                    }
-                }
-                j++;
-                if (j >= sizeJ) {
-                    j = 0;
-                }
+            j++;
+            if (j >= sizeJ) {
+                j = 0;
             }
-            nearFarBool = true;
         }
     }
 
-    public void clearGame(JPanel thisPanel1){
+    public void further(){
+        sizeI = 0;
+        sizeJ = 0;
+        i = 0;
+        j = 0;
+        sizeJ = gameButtons.size();
+        for (List list : gameButtons) {
+            sizeI = list.size();
+            for (GameButtons but : gameButtons.get(i)) {
+                gameButtons.get(i).get(j).gameButton.setVisible(true);
+                i++;
+                if (i >= sizeI) {
+                    i = 0;
+                }
+            }
+            j++;
+            if (j >= sizeJ) {
+                j = 0;
+            }
+        }
+        closerFurtherBool = true;
+    }
 
-        Component[] componentList = thisPanel1.getComponents();
+    public void closerFurtherGame(){
+        sizeI = 0;
+        sizeJ = 0;
+        i = 0;
+        j = 0;
+        if (controlButtons.get(2).buttonBool && closerFurtherBool) {
+            closer();
+            closerFurtherBool = false;
+        }
+
+        if (!controlButtons.get(2).buttonBool && !closerFurtherBool) {
+            further();
+            closerFurtherBool = true;
+        }
+    }
+
+    public void clearGame(){
+
+        Component[] componentList = panel.getComponents();
         for(Component c : componentList){
-            thisPanel1.remove(c);
+            panel.remove(c);
         }
 
         initialize(gameButtons);
+        closerFurtherBool = false;
+        controlButtons.get(2).setBool(false);
+        controlButtons.get(2).controlBut.setText(controlButtons.get(2).getFalseText());
+        closerFurtherGame();
 
         controlButtons.get(3).buttonBool = false;
+
+        refresh();
     }
 
     public void nextStep() {
 
-        int sizeI = 0;
-        int sizeJ = 0;
-        int aliveCells = 0;
-        int i = 0;
-        int j = 0;
-        int x, y;
-        int ix;
-        int jy;
+        sizeI = 0;
+        sizeJ = 0;
+        aliveCells = 0;
+        i = 0;
+        j = 0;
+        x = 0;
+        y = 0;
+        ix = 0;
+        jy = 0;
 
         sizeJ = gameButtons.size();
         for (List list : gameButtons) {
@@ -167,10 +205,10 @@ public class GameEngine {
                     }
                 }
                 gameButtons.get(i).get(j).setNextButtonBool(false);
-                if ((gameButtons.get(i).get(j).gameButtonBool == false) && (aliveCells == 3)){
+                if (!(gameButtons.get(i).get(j).gameButtonBool) && (aliveCells == 3)){
                     gameButtons.get(i).get(j).setNextButtonBool(true);
                 }
-                if ((gameButtons.get(i).get(j).gameButtonBool == true) && ((aliveCells == 2) || (aliveCells == 3))){
+                if ((gameButtons.get(i).get(j).gameButtonBool) && ((aliveCells == 2) || (aliveCells == 3))){
                     gameButtons.get(i).get(j).setNextButtonBool(true);
                 }
 
@@ -192,7 +230,7 @@ public class GameEngine {
         for (List list : gameButtons) {
             for (GameButtons but : gameButtons.get(i)) {
 
-                if (gameButtons.get(i).get(j).getNextButtonBool() == true) {
+                if (gameButtons.get(i).get(j).getNextButtonBool()) {
                     gameButtons.get(i).get(j).setGameButtonBool(true);
                 } else {
                     gameButtons.get(i).get(j).setGameButtonBool(false);
@@ -213,6 +251,8 @@ public class GameEngine {
                 j = 0;
             }
         }
+
+    //    refresh();
     }
 
     public void exitGame(){
@@ -237,7 +277,7 @@ public class GameEngine {
                 Thread.currentThread().interrupt();
             }
 
-            clearGame(thisPanel1);
+            clearGame();
             controlButtons.get(3).setBool(false);
         }
 
@@ -254,7 +294,7 @@ public class GameEngine {
             }
         }
 
-        nearFarGame();
+        closerFurtherGame();
 
         changeTempo();
 
