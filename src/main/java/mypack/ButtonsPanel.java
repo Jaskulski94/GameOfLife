@@ -3,7 +3,6 @@ package mypack;
 import javax.swing.*;
 import java.awt.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +30,7 @@ public class ButtonsPanel extends JPanel {
     public void init() {
 
         Font customFont = newScheme.getCustomFont();
-        customFont = customFont.deriveFont(34f);
+        customFont = customFont.deriveFont(30f);
 
         this.setLayout(new FlowLayout());
         this.setBackground(Color.BLACK);
@@ -42,6 +41,5 @@ public class ButtonsPanel extends JPanel {
         for (int i=0; i<controlButtons.size(); i++){
             controlButtons.get(i).addButton(panelHeight, customFont, this);
         }
-
     }
 }

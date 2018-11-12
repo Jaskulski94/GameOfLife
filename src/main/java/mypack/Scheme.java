@@ -11,7 +11,6 @@ import javax.swing.border.EtchedBorder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author Jakub Jaskulski
@@ -67,9 +66,11 @@ public class Scheme extends JFrame  {
         return frameHeight;
     }
 
-    public void initializeControlButtons (List<String> names1){
-        for (int i = 0; i<names1.size(); i++){
-            controlButtons.add(new ControlButtons(names1.get(i)));
+    public void initializeControlButtons (List<String> falseText1, List<String> trueText1){
+        for (int i = 0; i<falseText1.size(); i++){
+            controlButtons.add(new ControlButtons());
+            controlButtons.get(i).setFalseAndTrueText(falseText1.get(i), trueText1.get(i));
+            controlButtons.get(i).setBool(false);
         }
     }
 
@@ -88,14 +89,23 @@ public class Scheme extends JFrame  {
 
     public void init() {
 
-        setUndecorated(true);
-        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    System.exit(0);
+            }
+        });
+
 
         int size = 30;
 
-        String[] namesString = {"STOP", "SLOW", "NEAR", "CLEAR", "EXIT"};
-        List<String> names = new ArrayList<>();
-        names.addAll(Arrays.asList(namesString));
+        String[] falseString = {"START", "FASTER", "CLOSER", "CLEAR", "EXIT"};
+        List<String> falseText = new ArrayList<>();
+        falseText.addAll(Arrays.asList(falseString));
+
+        String[] trueString = {"STOP", "SLOWER", "FURTHER", "CLEAR", "EXIT"};
+        List<String> trueText = new ArrayList<>();
+        trueText.addAll(Arrays.asList(trueString));
 
         /*int k = 0;
         for (ControlButtons cbut : controlButtons){
@@ -105,8 +115,8 @@ public class Scheme extends JFrame  {
             k++;
         }*/
 
-        controlButtons = new ArrayList<>(names.size());
-        initializeControlButtons(names);
+        controlButtons = new ArrayList<>(falseText.size());
+        initializeControlButtons(falseText, trueText);
 
         /*for (int i = 0; i<names.size(); i++){
             controlButtons.add(new ControlButtons(names.get(i)));

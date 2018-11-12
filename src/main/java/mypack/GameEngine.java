@@ -11,6 +11,7 @@ public class GameEngine {
     public JPanel panel;
     public int size;
     public boolean runGameBool;
+    public boolean nearFarBool = true;
 
     public GameEngine(int size1, List<ControlButtons> controlButtons1, List<List<GameButtons>> gameButtons1, JPanel thisPanel1, boolean runGameBool1) {
         this.size = size1;
@@ -43,10 +44,9 @@ public class GameEngine {
 
 
     public void tempoFast(){
-
         try
         {
-            Thread.sleep(400);
+            Thread.sleep(200);
         }
         catch(InterruptedException ex)
         {
@@ -57,7 +57,7 @@ public class GameEngine {
     public void tempoSlow(){
         try
         {
-            Thread.sleep(900);
+            Thread.sleep(700);
         }
         catch(InterruptedException ex)
         {
@@ -65,8 +65,65 @@ public class GameEngine {
         }
     }
 
+    public void changeTempo(){
+        if (controlButtons.get(1).buttonBool){
+            tempoFast();
+        } else {
+            tempoSlow();
+        }
+    }
+
     public void nearFarGame(){
 
+        int sizeI = 0;
+        int sizeJ = 0;
+        int i = 0;
+        int j = 0;
+        if (controlButtons.get(2).buttonBool && nearFarBool) {
+            sizeJ = gameButtons.size();
+            for (List list : gameButtons) {
+                sizeI = list.size();
+                for (GameButtons but : gameButtons.get(i)) {
+
+                    if ((i < (sizeI / 3)) || (i > sizeI * 2 / 3)) {
+                        gameButtons.get(i).get(j).gameButton.setVisible(false);
+                    }
+
+                    if ((j < (sizeJ / 3)) || (j > sizeJ * 2 / 3)) {
+                        gameButtons.get(i).get(j).gameButton.setVisible(false);
+                    }
+
+                    i++;
+                    if (i >= sizeI) {
+                        i = 0;
+                    }
+                }
+                j++;
+                if (j >= sizeJ) {
+                    j = 0;
+                }
+            }
+            nearFarBool = false;
+        }
+
+        if (!controlButtons.get(2).buttonBool && !nearFarBool) {
+            sizeJ = gameButtons.size();
+            for (List list : gameButtons) {
+                sizeI = list.size();
+                for (GameButtons but : gameButtons.get(i)) {
+                    gameButtons.get(i).get(j).gameButton.setVisible(true);
+                    i++;
+                    if (i >= sizeI) {
+                        i = 0;
+                    }
+                }
+                j++;
+                if (j >= sizeJ) {
+                    j = 0;
+                }
+            }
+            nearFarBool = true;
+        }
     }
 
     public void clearGame(JPanel thisPanel1){
@@ -91,10 +148,11 @@ public class GameEngine {
         int x, y;
         int ix;
         int jy;
+
+        sizeJ = gameButtons.size();
         for (List list : gameButtons) {
-            sizeJ = gameButtons.size();
+            sizeI = list.size();
             for (GameButtons but : gameButtons.get(i)) {
-                sizeI = list.size();
                 for (x = -1; x <= 1; x++) {
                     for (y = -1; y <= 1; y++) {
                         if (!((x == 0) && (y == 0))) {
@@ -165,32 +223,42 @@ public class GameEngine {
 
     public void playGame(JPanel thisPanel1){
 
-        if (controlButtons.get(3).buttonBool == true){
+        if (controlButtons.get(3).buttonBool){
+
             controlButtons.get(0).setBool(false);
-            controlButtons.get(0).setButtonText("STOP");
+            controlButtons.get(0).setButtonText("START");
+
+            try
+            {
+                Thread.sleep(400);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
 
             clearGame(thisPanel1);
             controlButtons.get(3).setBool(false);
-
-      //      thisPanel1.repaint();
         }
 
-        if (controlButtons.get(1).buttonBool == true){
-            tempoFast();
-        } else {
-            tempoSlow();
-        }
-
-        if (controlButtons.get(2).buttonBool == true){
-            nearFarGame();
-        }
-
-        if (controlButtons.get(0).buttonBool == true){
+        if (controlButtons.get(0).buttonBool){
             nextStep();
-      //      thisPanel1.repaint();
+
+            try
+            {
+                Thread.sleep(200);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
         }
 
-        if (controlButtons.get(4).buttonBool == true){
+        nearFarGame();
+
+        changeTempo();
+
+        if (controlButtons.get(4).buttonBool){
             exitGame();
         }
 
