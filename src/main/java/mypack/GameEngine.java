@@ -212,9 +212,9 @@ public class GameEngine {
                     gameButtons.get(i).get(j).setNextButtonBool(true);
                 }
 
-                if (aliveCells != 0){
+                /*if (aliveCells != 0){
 
-                }
+                }*/
                 aliveCells = 0;
                 i++;
                 if (i >= sizeI){
@@ -226,6 +226,14 @@ public class GameEngine {
                 j = 0;
             }
         }
+
+        /*for (List<GameButtons> list :
+                gameButtons) {
+            for (GameButtons button :
+                    list) {
+                button.getGameButtonBool();
+            }
+        }*/
 
         for (List list : gameButtons) {
             for (GameButtons but : gameButtons.get(i)) {

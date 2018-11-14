@@ -5,7 +5,8 @@ import java.awt.*;
 
 import lombok.*;
 
-@Data public class ControlButtons {
+@Data
+public class ControlButtons {
     
     JButton controlBut;
     ControlListener controlListener;
@@ -71,9 +72,11 @@ import lombok.*;
         falseText = text1;
     }
 
+/*
     public String getFalseText (){
         return falseText;
     }
+*/
 
     public void setBool (boolean bool1){
 
