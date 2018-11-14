@@ -66,11 +66,23 @@ public class Scheme extends JFrame  {
         return frameHeight;
     }
 
-    public void initializeControlButtons (List<String> falseText1, List<String> trueText1){
-        for (int i = 0; i<falseText1.size(); i++){
+    public void initializeControlButtons (List<String> falseText1, List<String> trueText1, List<String> nonSwitchText1){
+        int i = 0;
+        int j = 0;
+        for (String text : falseText1){
             controlButtons.add(new ControlButtons());
             controlButtons.get(i).setFalseAndTrueText(falseText1.get(i), trueText1.get(i));
             controlButtons.get(i).setBool(false);
+            i++;
+        }
+
+        for (String text : nonSwitchText1){
+            controlButtons.add(new ControlButtons());
+            controlButtons.get(i).setFalseAndTrueText(nonSwitchText1.get(j), nonSwitchText1.get(j));
+            controlButtons.get(i).setBool(false);
+            controlButtons.get(i).setNonSwitchButtonbull(true);
+            i++;
+            j++;
         }
     }
 
@@ -96,55 +108,28 @@ public class Scheme extends JFrame  {
             }
         });
 
-        int size = 30;
+        int size = 60;
 
-        String[] falseString = {"START", "FASTER", "CLOSER", "CLEAR", "EXIT"};
+        String[] falseString = {"START", "FASTER", "CLOSER"};
         List<String> falseText = new ArrayList<>();
         falseText.addAll(Arrays.asList(falseString));
 
-        String[] trueString = {"STOP", "SLOWER", "FURTHER", "CLEAR", "EXIT"};
+        String[] trueString = {"STOP", "SLOWER", "FURTHER"};
         List<String> trueText = new ArrayList<>();
         trueText.addAll(Arrays.asList(trueString));
 
-        /*int k = 0;
-        for (ControlButtons cbut : controlButtons){
-            if (!(k >= controlButtons.size()) && !(k >= gameButtons.size())) {
-                controlButtons.add(new ControlButtons(names.get(k)));
-            }
-            k++;
-        }*/
+        String[] nonSwtichString = {"CLEAR", "EXIT"};
+        List<String> nonSwitchText = new ArrayList<>();
+        nonSwitchText.addAll(Arrays.asList(nonSwtichString));
 
-        controlButtons = new ArrayList<>(falseText.size());
-        initializeControlButtons(falseText, trueText);
+        controlButtons = new ArrayList<>();
+        initializeControlButtons(falseText, trueText, nonSwitchText);
 
-        /*for (int i = 0; i<names.size(); i++){
-            controlButtons.add(new ControlButtons(names.get(i)));
-        }*/
-
-        /*int sizeI;
-        int i = 0;
-
-        for (List list : gameButtons) {
-            for (GameButtons but : gameButtons.get(i)) {
-                sizeI = list.size();
-                if (i < sizeI){
-                    but = new GameButtons();
-                //    gameButtons.get(i).add(new GameButtons());
-                }
-                i++;
-            }
-            i = 0;
-        }*/
+        controlButtons.get(3).setNonSwitchButtonbull(true);
+        controlButtons.get(4).setNonSwitchButtonbull(true);
 
         gameButtons = new ArrayList<>();
         initializeGameButtons(size);
-
-        /*for (int i = 0; i<size; i++){
-            gameButtons.add(new ArrayList<GameButtons>());
-                for (int j = 0; j<size; j++) {
-                    gameButtons.get(i).add(new GameButtons());
-                }
-        }*/
 
         titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));

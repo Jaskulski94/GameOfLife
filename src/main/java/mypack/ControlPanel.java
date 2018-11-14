@@ -30,7 +30,7 @@ public class ControlPanel extends JPanel {
     public void init() {
 
         Font customFont = newScheme.getCustomFont();
-        customFont = customFont.deriveFont(30f);
+        customFont = customFont.deriveFont(24f);
 
         this.setLayout(new FlowLayout());
         this.setBackground(Color.BLACK);

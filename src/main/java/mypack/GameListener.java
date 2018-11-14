@@ -16,5 +16,4 @@ public class GameListener implements ActionListener {
         gameButtons.changeButAndBool();
 
     }
-
 }

@@ -6,13 +6,13 @@ import java.awt.*;
 import lombok.*;
 
 @Data public class ControlButtons {
-
-
+    
     JButton controlBut;
     ControlListener controlListener;
     boolean buttonBool;
     String falseText;
     String trueText;
+    boolean nonSwitchButtonbull;
 
     public ControlButtons (){
     }
@@ -21,6 +21,7 @@ import lombok.*;
         falseText = falseText1;
         trueText = trueText1;
         buttonBool = false;
+        nonSwitchButtonbull = false;
     }
 
     public void addButton (int panelHeight1, Font customFont1, JPanel thisPanel1) {
@@ -38,7 +39,7 @@ import lombok.*;
     }
 
     public void changeButtonAndBool (){
-        if (!((controlBut.getText() == "CLEAR") || (controlBut.getText() == "EXIT"))){
+        if (!(nonSwitchButtonbull)){
             if (getBool()){
                 controlBut.setText(falseText);
                 setBool(false);
@@ -49,6 +50,10 @@ import lombok.*;
         } else {
             setBool(true);
         }
+    }
+
+    public void setNonSwitchButtonbull (boolean bool1){
+        nonSwitchButtonbull = bool1;
     }
 
     public void setTrueText (String text1){

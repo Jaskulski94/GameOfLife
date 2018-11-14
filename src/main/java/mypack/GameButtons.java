@@ -20,6 +20,7 @@ public class GameButtons {
         indexX = index1;
         indexY = index2;
         gameButton = new JButton();
+    //    gameButton.setBorder(BorderFactory.createLineBorder(Color.darkGray));
         gameButton.setBorderPainted(true);
         gameButton.setFocusPainted(false);
         gameButton.setBackground(Color.BLACK);
