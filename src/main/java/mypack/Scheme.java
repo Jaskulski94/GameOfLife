@@ -50,6 +50,7 @@ public class Scheme extends JFrame  {
 
     //YourEnum.valueOf("VALUE").ordinal(); <- getting value of enum
 
+
     public Font getCustomFont() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
