@@ -6,21 +6,21 @@ import java.util.List;
 
 public class GameEngine {
 
-    public List<ControlButtons> controlButtons;
-    public List<List<GameButtons>> gameButtons;
-    public JPanel panel;
-    public int size;
-    public boolean runGameBool;
-    public boolean closerFurtherBool = true;
+    private List<ControlButtons> controlButtons;
+    private List<List<GameButtons>> gameButtons;
+    private JPanel panel;
+    private int size;
+    private boolean runGameBool;
+    private boolean closerFurtherBool = true;
 
-    int sizeI = 0;
-    int sizeJ = 0;
-    int aliveCells = 0;
-    int i = 0;
-    int j = 0;
-    int x, y;
-    int ix;
-    int jy;
+    private int sizeI = 0;
+    private int sizeJ = 0;
+    private int aliveCells = 0;
+    private int i = 0;
+    private int j = 0;
+    private int x, y;
+    private int ix;
+    private int jy;
 
     public GameEngine(int size1, List<ControlButtons> controlButtons1, List<List<GameButtons>> gameButtons1, JPanel thisPanel1, boolean runGameBool1) {
         this.size = size1;
@@ -166,7 +166,7 @@ public class GameEngine {
 
         initialize(gameButtons);
         closerFurtherBool = false;
-        controlButtons.get(2).setBool(false);
+        controlButtons.get(2).setButtonBool(false);
         controlButtons.get(2).controlBut.setText(controlButtons.get(2).getFalseText());
         closerFurtherGame();
 
@@ -212,9 +212,6 @@ public class GameEngine {
                     gameButtons.get(i).get(j).setNextButtonBool(true);
                 }
 
-                /*if (aliveCells != 0){
-
-                }*/
                 aliveCells = 0;
                 i++;
                 if (i >= sizeI){
@@ -227,40 +224,18 @@ public class GameEngine {
             }
         }
 
-        /*for (List<GameButtons> list :
-                gameButtons) {
-            for (GameButtons button :
-                    list) {
-                button.getGameButtonBool();
-            }
-        }*/
-
-        for (List list : gameButtons) {
-            for (GameButtons but : gameButtons.get(i)) {
-
-                if (gameButtons.get(i).get(j).getNextButtonBool()) {
-                    gameButtons.get(i).get(j).setGameButtonBool(true);
+        for (List<GameButtons> list : gameButtons) {
+            for (GameButtons button : list) {
+                if (button.getNextButtonBool()){
+                    button.setGameButtonBool(true);
                 } else {
-                    gameButtons.get(i).get(j).setGameButtonBool(false);
+                    button.setGameButtonBool(false);
                 }
 
-                gameButtons.get(i).get(j).changeButtonBackground();
-
-                gameButtons.get(i).get(j).setNextButtonBool(false);
-
-                i++;
-                if (i >= sizeI) {
-                    i = 0;
-                }
-
-            }
-            j++;
-            if (j >= sizeJ) {
-                j = 0;
+                button.changeButtonBackground();
+                button.setNextButtonBool(false);
             }
         }
-
-    //    refresh();
     }
 
     public void exitGame(){
@@ -269,53 +244,48 @@ public class GameEngine {
         System.exit(0);
     }
 
-    public void playGame(JPanel thisPanel1){
-
-        if (controlButtons.get(3).buttonBool){
-
-            controlButtons.get(0).setBool(false);
-            controlButtons.get(0).setButtonText("START");
-
-            try
-            {
-                Thread.sleep(400);
-            }
-            catch(InterruptedException ex)
-            {
-                Thread.currentThread().interrupt();
-            }
-
-            clearGame();
-            controlButtons.get(3).setBool(false);
-        }
-
-        if (controlButtons.get(0).buttonBool){
-            nextStep();
-
-            try
-            {
-                Thread.sleep(200);
-            }
-            catch(InterruptedException ex)
-            {
-                Thread.currentThread().interrupt();
-            }
-        }
-
-        closerFurtherGame();
-
-        changeTempo();
-
-        if (controlButtons.get(4).buttonBool){
-            exitGame();
-        }
-
-    }
 
     public void runGame(JPanel thisPanel1){
 
         while(runGameBool){
-            playGame(thisPanel1);
+            if (controlButtons.get(3).buttonBool){
+
+                controlButtons.get(0).setButtonBool(false);
+                controlButtons.get(0).setControlButtonText("START");
+
+                try
+                {
+                    Thread.sleep(400);
+                }
+                catch(InterruptedException ex)
+                {
+                    Thread.currentThread().interrupt();
+                }
+
+                clearGame();
+                controlButtons.get(3).setButtonBool(false);
+            }
+
+            if (controlButtons.get(0).buttonBool){
+                nextStep();
+
+                try
+                {
+                    Thread.sleep(200);
+                }
+                catch(InterruptedException ex)
+                {
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+            closerFurtherGame();
+
+            changeTempo();
+
+            if (controlButtons.get(4).buttonBool){
+                exitGame();
+            }
         }
     }
 

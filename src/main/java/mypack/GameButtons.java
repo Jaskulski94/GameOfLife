@@ -3,14 +3,17 @@ package mypack;
 import javax.swing.*;
 import java.awt.*;
 
+import lombok.*;
+
+@Data
 public class GameButtons {
 
     public int indexX;
     public int indexY;
     public JButton gameButton;
 
-    public boolean nextButtonBool;
-    public boolean gameButtonBool;
+    public Boolean nextButtonBool;
+    public Boolean gameButtonBool;
 
     public GameButtons() {
         init();
@@ -30,21 +33,13 @@ public class GameButtons {
         thisPanel1.add(gameButton, GBC);
     }
 
-    public boolean getGameButtonBool() {
-        return gameButtonBool;
-    }
-
-    public void setGameButtonBool (boolean bool1){
-        gameButtonBool = bool1;
-    }
-
     public void changeGameButtonBull(){
         gameButtonBool ^= true;
     }
 
     public void changeButtonBackground(){
 
-        if (gameButtonBool == true)
+        if (gameButtonBool)
             gameButton.setBackground(Color.WHITE);
         else
             gameButton.setBackground(Color.BLACK);
@@ -53,14 +48,6 @@ public class GameButtons {
     public void changeButAndBool(){
         changeGameButtonBull();
         changeButtonBackground();
-    }
-
-    public void setNextButtonBool (boolean bool1){
-        nextButtonBool = bool1;
-    }
-
-    public boolean getNextButtonBool (){
-        return nextButtonBool;
     }
 
     public void init() {

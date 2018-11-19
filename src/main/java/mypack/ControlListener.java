@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class ControlListener implements ActionListener {
 
-    ControlButtons controlButtons;
+    private ControlButtons controlButtons;
 
     public ControlListener(ControlButtons controlButtons1) {
         this.controlButtons = controlButtons1;

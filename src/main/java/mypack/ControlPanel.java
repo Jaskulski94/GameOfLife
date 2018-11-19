@@ -18,7 +18,7 @@ public class ControlPanel extends JPanel {
 
     private Scheme newScheme;
 
-    List<ControlButtons> controlButtons;
+    public List<ControlButtons> controlButtons;
 
     public ControlPanel(Scheme scheme1, List<ControlButtons> controlButtons1) {
         this.newScheme = scheme1;
@@ -38,8 +38,8 @@ public class ControlPanel extends JPanel {
         int panelHeight = newScheme.getFrameHeight();
         panelHeight *= 0.2;
 
-        for (int i=0; i<controlButtons.size(); i++){
-            controlButtons.get(i).addButton(panelHeight, customFont, this);
+        for (ControlButtons button : controlButtons) {
+            button.addButton(panelHeight, customFont, this);
         }
     }
 }

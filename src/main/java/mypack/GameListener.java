@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class GameListener implements ActionListener {
 
-    GameButtons gameButtons;
+    private GameButtons gameButtons;
 
     public GameListener(GameButtons gameButtons1) {
         this.gameButtons = gameButtons1;

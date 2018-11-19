@@ -23,19 +23,32 @@ import java.util.List;
 
 public class Scheme extends JFrame  {
 
-    private TitlePanel titlePanel;
+    /*private TitlePanel titlePanel;
     private ControlPanel controlPanel;
-    private GamePanel gamePanel;
+    private GamePanel gamePanel;*/
 
     private Font customFont;
     private int frameWidth;
     private int frameHeight;
 
-    List<List<GameButtons>> gameButtons;
-    List<ControlButtons> controlButtons;
-    GameEngine gameEngine;
+    private List<List<GameButtons>> gameButtons;
+    private List<ControlButtons> controlButtons;
+    private GameEngine gameEngine;
 
-    boolean runGameBool;
+    private boolean runGameBool;
+
+    /*public enum buttonTexts {
+        START (0),
+        STOP (1);
+
+        private int value;
+
+        buttonTexts (int value1){
+            this.value = value1;
+        }
+    }*/
+
+    //YourEnum.valueOf("VALUE").ordinal(); <- getting value of enum
 
     public Font getCustomFont() {
         try {
@@ -72,15 +85,15 @@ public class Scheme extends JFrame  {
         for (String text : falseText1){
             controlButtons.add(new ControlButtons());
             controlButtons.get(i).setFalseAndTrueText(falseText1.get(i), trueText1.get(i));
-            controlButtons.get(i).setBool(false);
+            controlButtons.get(i).setButtonBool(false);
             i++;
         }
 
         for (String text : nonSwitchText1){
             controlButtons.add(new ControlButtons());
             controlButtons.get(i).setFalseAndTrueText(nonSwitchText1.get(j), nonSwitchText1.get(j));
-            controlButtons.get(i).setBool(false);
-            controlButtons.get(i).setNonSwitchButtonbull(true);
+            controlButtons.get(i).setButtonBool(false);
+            controlButtons.get(i).setNonSwitchButtonBool(true);
             i++;
             j++;
         }
@@ -101,6 +114,8 @@ public class Scheme extends JFrame  {
 
     public void init() {
 
+
+
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -108,7 +123,7 @@ public class Scheme extends JFrame  {
             }
         });
 
-        int size = 60;
+        int size = 30;
 
         String[] falseString = {"START", "FASTER", "CLOSER"};
         List<String> falseText = new ArrayList<>();
@@ -125,26 +140,25 @@ public class Scheme extends JFrame  {
         controlButtons = new ArrayList<>();
         initializeControlButtons(falseText, trueText, nonSwitchText);
 
-        controlButtons.get(3).setNonSwitchButtonbull(true);
-        controlButtons.get(4).setNonSwitchButtonbull(true);
+        controlButtons.get(3).setNonSwitchButtonBool(true);
+        controlButtons.get(4).setNonSwitchButtonBool(true);
 
         gameButtons = new ArrayList<>();
         initializeGameButtons(size);
 
-        titlePanel = new TitlePanel(this);
+        TitlePanel titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));
 
-        gamePanel = new GamePanel();
+        GamePanel gamePanel = new GamePanel();
         gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
-        controlPanel = new ControlPanel(this, controlButtons);
+        ControlPanel controlPanel = new ControlPanel(this, controlButtons);
         controlPanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 2 / 12));
 
         customFont = getCustomFont();
 
         Dimension frameDim = new Dimension(frameWidth, frameHeight);
         this.setSize(frameDim);
-        //    this.setMinimumSize(frameDim);
 
         GridBagLayout layout1 = new GridBagLayout();
         this.setLayout(layout1);

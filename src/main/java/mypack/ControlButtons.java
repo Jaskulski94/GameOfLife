@@ -5,15 +5,16 @@ import java.awt.*;
 
 import lombok.*;
 
+
 @Data
 public class ControlButtons {
-    
-    JButton controlBut;
-    ControlListener controlListener;
-    boolean buttonBool;
-    String falseText;
-    String trueText;
-    boolean nonSwitchButtonbull;
+
+    public JButton controlBut;
+    public ControlListener controlListener;
+    public Boolean buttonBool;
+    public String falseText;
+    public String trueText;
+    public Boolean nonSwitchButtonBool;
 
     public ControlButtons (){
     }
@@ -22,7 +23,7 @@ public class ControlButtons {
         falseText = falseText1;
         trueText = trueText1;
         buttonBool = false;
-        nonSwitchButtonbull = false;
+        nonSwitchButtonBool = false;
     }
 
     public void addButton (int panelHeight1, Font customFont1, JPanel thisPanel1) {
@@ -40,56 +41,21 @@ public class ControlButtons {
     }
 
     public void changeButtonAndBool (){
-        if (!(nonSwitchButtonbull)){
-            if (getBool()){
+        if (!(nonSwitchButtonBool)){
+            if (getButtonBool()){
                 controlBut.setText(falseText);
-                setBool(false);
+                setButtonBool(false);
             } else {
                 controlBut.setText(trueText);
-                setBool(true);
+                setButtonBool(true);
             }
         } else {
-            setBool(true);
+            setButtonBool(true);
         }
     }
 
-    public void setNonSwitchButtonbull (boolean bool1){
-        nonSwitchButtonbull = bool1;
-    }
 
-    public void setTrueText (String text1){
-
-        trueText = text1;
-    }
-
-    public String getTrueText (){
-
-        return trueText;
-    }
-
-    public void setFalseText (String text1){
-
-        falseText = text1;
-    }
-
-/*
-    public String getFalseText (){
-        return falseText;
-    }
-*/
-
-    public void setBool (boolean bool1){
-
-        buttonBool = bool1;
-    }
-
-    public boolean getBool (){
-
-        return buttonBool;
-    }
-
-    public void setButtonText (String text1){
-
+    public void setControlButtonText (String text1){
         controlBut.setText(text1);
     }
 }
