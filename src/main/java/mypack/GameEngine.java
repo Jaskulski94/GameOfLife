@@ -12,6 +12,7 @@ public class GameEngine {
     private int size;
     private boolean runGameBool;
     private boolean closerFurtherBool = true;
+    private ControlButtonsEnum controlButtonsEnum;
 
     private int sizeI = 0;
     private int sizeJ = 0;
@@ -30,7 +31,6 @@ public class GameEngine {
         this.panel = thisPanel1;
 
         this.runGameBool = runGameBool1;
-        init();
     }
 
     public void refresh (){
@@ -81,7 +81,7 @@ public class GameEngine {
     }
 
     public void changeTempo(){
-        if (controlButtons.get(1).buttonBool){
+        if (controlButtons.get(getEnumValue("SLOWER")).buttonBool){
             tempoFast();
         } else {
             tempoSlow();
@@ -97,15 +97,12 @@ public class GameEngine {
         for (List list : gameButtons) {
             sizeI = list.size();
             for (GameButtons but : gameButtons.get(i)) {
-
                 if ((i < (sizeI / 3)) || (i > sizeI * 2 / 3)) {
                     gameButtons.get(i).get(j).gameButton.setVisible(false);
                 }
-
                 if ((j < (sizeJ / 3)) || (j > sizeJ * 2 / 3)) {
                     gameButtons.get(i).get(j).gameButton.setVisible(false);
                 }
-
                 i++;
                 if (i >= sizeI) {
                     i = 0;
@@ -119,45 +116,38 @@ public class GameEngine {
     }
 
     public void further(){
-        sizeI = 0;
-        sizeJ = 0;
-        i = 0;
-        j = 0;
-        sizeJ = gameButtons.size();
-        for (List list : gameButtons) {
-            sizeI = list.size();
-            for (GameButtons but : gameButtons.get(i)) {
-                gameButtons.get(i).get(j).gameButton.setVisible(true);
-                i++;
-                if (i >= sizeI) {
-                    i = 0;
-                }
-            }
-            j++;
-            if (j >= sizeJ) {
-                j = 0;
+        for (List<GameButtons> list : gameButtons) {
+            for (GameButtons button : list) {
+                button.gameButton.setVisible(true);
             }
         }
         closerFurtherBool = true;
     }
 
     public void closerFurtherGame(){
-        sizeI = 0;
-        sizeJ = 0;
-        i = 0;
-        j = 0;
-        if (controlButtons.get(2).buttonBool && closerFurtherBool) {
+        if (controlButtons.get(getEnumValue("FURTHER")).buttonBool && closerFurtherBool) {
             closer();
             closerFurtherBool = false;
         }
 
-        if (!controlButtons.get(2).buttonBool && !closerFurtherBool) {
+        if (!controlButtons.get(getEnumValue("FURTHER")).buttonBool && !closerFurtherBool) {
             further();
             closerFurtherBool = true;
         }
     }
 
     public void clearGame(){
+        controlButtons.get(getEnumValue("STOP")).setButtonBool(false);
+        controlButtons.get(getEnumValue("STOP")).setControlButtonText("START");
+
+        try
+        {
+            Thread.sleep(400);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
 
         Component[] componentList = panel.getComponents();
         for(Component c : componentList){
@@ -173,6 +163,9 @@ public class GameEngine {
         controlButtons.get(3).buttonBool = false;
 
         refresh();
+
+        controlButtons.get(getEnumValue("CLEAR")).setButtonBool(false);
+
     }
 
     public void nextStep() {
@@ -239,56 +232,33 @@ public class GameEngine {
     }
 
     public void exitGame(){
-
         runGameBool = false;
         System.exit(0);
     }
 
+    private int getEnumValue(String name1){
+        ControlButtonsEnum enum1 = ControlButtonsEnum.valueOf(name1);
+        return enum1.getValue();
+    }
 
     public void runGame(JPanel thisPanel1){
-
         while(runGameBool){
-            if (controlButtons.get(3).buttonBool){
 
-                controlButtons.get(0).setButtonBool(false);
-                controlButtons.get(0).setControlButtonText("START");
-
-                try
-                {
-                    Thread.sleep(400);
-                }
-                catch(InterruptedException ex)
-                {
-                    Thread.currentThread().interrupt();
-                }
-
+            if (controlButtons.get(getEnumValue("CLEAR")).buttonBool){
                 clearGame();
-                controlButtons.get(3).setButtonBool(false);
             }
 
-            if (controlButtons.get(0).buttonBool){
+            if (controlButtons.get(getEnumValue("STOP")).buttonBool){
                 nextStep();
+            }
 
-                try
-                {
-                    Thread.sleep(200);
-                }
-                catch(InterruptedException ex)
-                {
-                    Thread.currentThread().interrupt();
-                }
+            if (controlButtons.get(getEnumValue("EXIT")).buttonBool){
+                exitGame();
             }
 
             closerFurtherGame();
 
             changeTempo();
-
-            if (controlButtons.get(4).buttonBool){
-                exitGame();
-            }
         }
-    }
-
-    public void init() {
     }
 }

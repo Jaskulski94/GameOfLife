@@ -37,19 +37,7 @@ public class Scheme extends JFrame  {
 
     private boolean runGameBool;
 
-    /*public enum buttonTexts {
-        START (0),
-        STOP (1);
-
-        private int value;
-
-        buttonTexts (int value1){
-            this.value = value1;
-        }
-    }*/
-
-    //YourEnum.valueOf("VALUE").ordinal(); <- getting value of enum
-
+    private ControlButtonsEnum controlButtonsEnum;
 
     public Font getCustomFont() {
         try {
@@ -80,42 +68,11 @@ public class Scheme extends JFrame  {
         return frameHeight;
     }
 
-    public void initializeControlButtons (List<String> falseText1, List<String> trueText1, List<String> nonSwitchText1){
-        int i = 0;
-        int j = 0;
-        for (String text : falseText1){
-            controlButtons.add(new ControlButtons());
-            controlButtons.get(i).setFalseAndTrueText(falseText1.get(i), trueText1.get(i));
-            controlButtons.get(i).setButtonBool(false);
-            i++;
-        }
-
-        for (String text : nonSwitchText1){
-            controlButtons.add(new ControlButtons());
-            controlButtons.get(i).setFalseAndTrueText(nonSwitchText1.get(j), nonSwitchText1.get(j));
-            controlButtons.get(i).setButtonBool(false);
-            controlButtons.get(i).setNonSwitchButtonBool(true);
-            i++;
-            j++;
-        }
-    }
-
-    public void initializeGameButtons (int size1){
-        for (int i = 0; i<size1; i++){
-            gameButtons.add(new ArrayList<GameButtons>());
-            for (int j = 0; j<size1; j++) {
-                gameButtons.get(i).add(new GameButtons());
-            }
-        }
-    }
-
     public Scheme() {
         init();
     }
 
     public void init() {
-
-
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -124,33 +81,14 @@ public class Scheme extends JFrame  {
             }
         });
 
-        int size = 30;
-
-        String[] falseString = {"START", "FASTER", "CLOSER"};
-        List<String> falseText = new ArrayList<>();
-        falseText.addAll(Arrays.asList(falseString));
-
-        String[] trueString = {"STOP", "SLOWER", "FURTHER"};
-        List<String> trueText = new ArrayList<>();
-        trueText.addAll(Arrays.asList(trueString));
-
-        String[] nonSwtichString = {"CLEAR", "EXIT"};
-        List<String> nonSwitchText = new ArrayList<>();
-        nonSwitchText.addAll(Arrays.asList(nonSwtichString));
-
         controlButtons = new ArrayList<>();
-        initializeControlButtons(falseText, trueText, nonSwitchText);
-
-        controlButtons.get(3).setNonSwitchButtonBool(true);
-        controlButtons.get(4).setNonSwitchButtonBool(true);
-
         gameButtons = new ArrayList<>();
-        initializeGameButtons(size);
+
 
         TitlePanel titlePanel = new TitlePanel(this);
         titlePanel.setPreferredSize(new Dimension(frameWidth, frameHeight / 12));
 
-        GamePanel gamePanel = new GamePanel();
+        GamePanel gamePanel = new GamePanel(gameButtons);
         gamePanel.setPreferredSize(new Dimension(frameWidth, frameHeight * 7 / 12));
 
         ControlPanel controlPanel = new ControlPanel(this, controlButtons);
@@ -194,7 +132,7 @@ public class Scheme extends JFrame  {
 
         runGameBool = true;
 
-        gameEngine = new GameEngine(size, controlButtons, gameButtons, gamePanel, runGameBool);
+        gameEngine = new GameEngine(gamePanel.getGameSize(), controlButtons, gameButtons, gamePanel, runGameBool);
         gameEngine.initialize(gameButtons);
         gameEngine.runGame(gamePanel);
 

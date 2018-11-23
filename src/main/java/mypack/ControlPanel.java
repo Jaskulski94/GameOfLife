@@ -17,13 +17,25 @@ import java.util.List;
 public class ControlPanel extends JPanel {
 
     private Scheme newScheme;
-
+    private ControlButtonsEnum controlButtonsEnum;
     public List<ControlButtons> controlButtons;
+
+    private void initializeControlButtons(){
+        for (ControlButtonsEnum enum1 : controlButtonsEnum.values()){
+            controlButtons.add(new ControlButtons());
+            controlButtons.get(controlButtons.size() - 1).setFalseAndTrueText(enum1.getFalseText(), enum1.name());
+            controlButtons.get(controlButtons.size() - 1).setButtonBool(false);
+            if(enum1.getNonSwitchBool()){
+                controlButtons.get(controlButtons.size() - 1).setNonSwitchButtonBool(true);
+            } else {
+                controlButtons.get(controlButtons.size() - 1).setNonSwitchButtonBool(false);
+            }
+        }
+    }
 
     public ControlPanel(Scheme scheme1, List<ControlButtons> controlButtons1) {
         this.newScheme = scheme1;
         this.controlButtons = controlButtons1;
-
         init();
         }
 
@@ -37,6 +49,8 @@ public class ControlPanel extends JPanel {
 
         int panelHeight = newScheme.getFrameHeight();
         panelHeight *= 0.2;
+
+        initializeControlButtons();
 
         for (ControlButtons button : controlButtons) {
             button.addButton(panelHeight, customFont, this);
